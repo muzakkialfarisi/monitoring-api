@@ -9,38 +9,30 @@ use App\Models\LogModel;
 class LogRepository
 {
     private Int
-        $main_dealer_id = 0,
-        $feature_id = 0,
-        $api_id = 0,
-        $status_code_factual = 0,
-        $status_code_actual = 0,
-        $take = 100,
-        $skip = 0;
+        $id,
+        $main_dealer_id,
+        $feature_id,
+        $api_id,
+        $status_code_factual,
+        $status_code_actual;
 
-    private bool
-        $status_code_validation = false,
-        $response_body_validation = false,
-        $response_time_validation = false;
-
-    private float
-        $response_time = 0,
-        $response_time_accumulation = 0;
-    
     private string
         $main_dealer_name,
         $feature_name,
         $url,
-        $application_feature,
         $request_header,
         $request_payload,
         $response_body_factual,
-        $response_body_actual,
-        $search;
+        $response_body_actual;
 
-    public function __construct()
-    {
-        $this->log_model = new LogsModel();
-    }
+    private float
+        $response_time,
+        $response_time_accumulation;
+
+    private bool
+        $status_code_validation,
+        $response_body_validation,
+        $response_time_validation;
 
     public function set_id(Int $id): self
     {
@@ -90,13 +82,13 @@ class LogRepository
         return $this;
     }
 
-    public function set_status_code_factual(int $status_code_factual): self
+    public function set_status_code_factual(Int $status_code_factual): self
     {
         $this->status_code_factual = $status_code_factual;
         return $this;
     }
 
-    public function set_status_code_actual(int $status_code_actual): self
+    public function set_status_code_actual(Int $status_code_actual): self
     {
         $this->status_code_actual = $status_code_actual;
         return $this;
@@ -114,7 +106,7 @@ class LogRepository
         return $this;
     }
 
-    public function set_response_body_actual(string $response_body_actual): self
+    public function set_response_body_actual(Int $response_body_actual): self
     {
         $this->response_body_actual = $response_body_actual;
         return $this;
@@ -138,77 +130,49 @@ class LogRepository
         return $this;
     }
 
-    public function set_response_time_validation(bool $response_time_validation): self
+    public function set_response_time_validation(Int $response_time_validation): self
     {
         $this->response_time_validation = $response_time_validation;
         return $this;
     }
 
-    public function save(): bool
+    public function save()
     {
-        return (bool) $this->log_model->create([
-            'main_dealer_id' => $this->initial_service->main_dealer_id[$this->key],
-            'application_name' => $this->initial_service->application_name[$this->key],
-            'url' => $this->initial_service->base_url[$this->key] . $this->path,
-            'application_feature' => $this->application_feature,
-            'request_header' => $this->request_header,
-            'request_payload' => $this->request_payload,
-            'status_code_factual' => $this->status_code_factual,
-            'status_code_actual' => $this->status_code_actual,
-            'status_code_validation' => $this->status_code_validation,
-            'response_body_factual' => $this->response_body_factual,
-            'response_body_actual' => $this->response_body_actual,
-            'response_body_validation' => $this->response_body_validation,
-            'response_time' => $this->response_time,
-            'response_time_accumulation' => $this->response_time_accumulation,
-            'response_time_validation' => $this->response_time_validation,
+        $data = (new LogModel())->create([
+            'id' => $this->id ?? null,
+            'main_dealer_id' => $this->main_dealer_id ?? null,
+            'main_dealer_name' => $this->main_dealer_name ?? null,
+            'feature_id' => $this->feature_id ?? null,
+            'feature_name' => $this->feature_name ?? null,
+            'api_id' => $this->api_id ?? null,
+            'url' => $this->url ?? null,
+            'request_header' => $this->request_header ?? null,
+            'request_payload' => $this->request_payload ?? null,
+            'status_code_factual' => $this->status_code_factual ?? null,
+            'status_code_actual' => $this->status_code_actual ?? null,
+            'status_code_validation' => $this->status_code_validation ?? null,
+            'response_body_factual' => $this->response_body_factual ?? null,
+            'response_body_actual' => $this->response_body_actual ?? null,
+            'response_body_validation' => $this->response_body_validation ?? null,
+            'response_time' => $this->response_time ?? null,
+            'response_time_accumulation' => $this->response_time_accumulation ?? null,
+            'response_time_validation' => $this->response_time_validation ?? null,
         ]);
-    }
 
-
-
-    public function getList(): Object
-    {
-        $data = $this->log->whereNull("deleted_at");
-
-        if (!empty($this->search)) {
-            $query = $query->where(function($qry) {
-                $qry->where("application_name", "LIKE", "%".$this->search."%")
-                    ->orwhere("application_feature", "LIKE", "%".$this->search."%")
-                    ->orWhere("url", "LIKE", "%".$this->search."%")
-                    ->orWhere("request_header", "LIKE", "%".$this->search."%")
-                    ->orWhere("request_payload", "LIKE", "%".$this->search."%")
-                    ->orWhere("status_code_factual", "LIKE", "%".$this->search."%")
-                    ->orWhere("status_code_actual", "LIKE", "%".$this->search."%")
-                    ->orWhere("status_code_validation", "LIKE", "%".$this->search."%")
-                    ->orWhere("response_body_factual", "LIKE", "%".$this->search."%")
-                    ->orWhere("response_body_actual", "LIKE", "%".$this->search."%")
-                    ->orWhere("response_body_validation", "LIKE", "%".$this->search."%")
-                    ->orWhere("response_time", "LIKE", "%".$this->search."%")
-                    ->orWhere("response_time_accumulation", "LIKE", "%".$this->search."%")
-                    ->orWhere("response_time_validation", "LIKE", "%".$this->search."%");
-            });
+        if(!$data){
+            return false;
         }
 
-        return (object) [
-            "total" => $query->count(),
-            "rows" => $query->take($this->take)->skip($this->skip)->get()
-        ];
+        return $data;
     }
 
-    
-
-    public function getAccumulatedTime()
+    public function get_response_time_accumulation()
     {
-        $date = Carbon::now()->subDays(1);
-        return $this->log_model
-            ->whereNull('deleted_at')
-            ->where('main_dealer_id', $this->initial_service->main_dealer_id[$this->key])
-            ->where('application_name', $this->initial_service->application_name[$this->key])
-            ->where('application_feature', $this->application_feature)
-            ->where('url', $this->initial_service->base_url[$this->key] . $this->path)
-            ->whereDate('created_at', '>=', $date)
+        return round((new LogModel())->whereNull('deleted_at')
+            ->where('main_dealer_id', $this->main_dealer_id ?? 0)
+            ->where('api_id', $this->api_id ?? 0)
+            ->whereDate('created_at', '>=', Carbon::now()->subDays(7))
             ->where('response_time_validation', true)
-            ->avg('response_time');
-    }
+            ->avg('response_time'), 2);
+        }
 }

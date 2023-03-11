@@ -44,7 +44,7 @@ class ApiService
         $data = (new ApiRepository())
             ->set_back_end_id($back_end->id)
             ->set_relationship([
-                'back_end', 'body', 'params', 'authorization'
+                'back_end', 'headers', 'body', 'params'
             ])
             ->getList();
         

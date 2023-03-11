@@ -9,7 +9,7 @@ class FeatureModel extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'feautre';
+    protected $table = 'feature';
     protected $dateFormat = "Y-m-d H:i:s";
     protected $fillable = [];
 

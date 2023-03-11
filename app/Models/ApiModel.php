@@ -41,8 +41,4 @@ class ApiModel extends Model
     public function headers(){
         return $this->hasMany(HeadersModel::class, 'api_id', 'id');
     }
-
-    public function authorization(){
-        return $this->hasOne(HeadersModel::class, 'api_id', 'id')->where('name', 'authorization');
-    }
 }

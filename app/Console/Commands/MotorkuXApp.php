@@ -7,6 +7,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\TransferStats;
 
 use App\Services\ApiService;
+use App\Services\LogService;
 
 class MotorkuXApp extends Command
 {
@@ -18,6 +19,7 @@ class MotorkuXApp extends Command
         parent::__construct();
         $this->client = new Client();
         $this->api_service = new ApiService();
+        $this->log_service = new LogService();
     }
 
     public function handle()
@@ -45,7 +47,12 @@ class MotorkuXApp extends Command
             }
 
             if(isset($data)){
-                
+                if($data->getStatusCode() == 200){
+                    
+                }
+                else{
+
+                }
             }
     
             $this->info('response time = ' . $request_time->getTotaltime());
