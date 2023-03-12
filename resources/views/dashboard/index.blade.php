@@ -4,7 +4,7 @@
     <div class="card-header border-bottom">
         <div class="d-flex align-items-center">
             <div class="flex-grow-1 ps-3">
-                <h5 class="card-title"><strong>Arrival Delivery Orders</strong></h5>
+                <h5 class="card-title"><strong>All Main Dealer</strong></h5>
             </div>
         </div>
     </div>
@@ -110,5 +110,14 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script type="text/javascript">
+        $(function(){
+            $('.table').DataTable({
+            });
+        });
+    </script>
+@endpush
 
 @include('_layout._content.footer')

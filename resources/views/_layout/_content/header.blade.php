@@ -1,13 +1,13 @@
 @include('_layout.html_open')
 
-{{-- <div class="splash active">
+<div class="splash active">
     <div class="splash-icon"></div>
-</div> --}}
+</div>
 
 <div class="wrapper">
     <nav id="sidebar" class="sidebar">
         <a class="sidebar-brand" asp-controller="Dashboards" asp-action="Index">
-            <img src="~/img/avatars/wmsmini.jpg" class="img-fluid rounded-3  mb-2" alt="M-API" />
+            {{-- <img src="~/img/avatars/wmsmini.jpg" class="img-fluid rounded-3  mb-2" alt="M-API" /> --}}
             &nbsp;&nbsp;
             M-API
         </a>
@@ -49,9 +49,12 @@
                             <i class="align-middle fas fa-user-cog"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" asp-controller="Account" asp-action="Index"><i class="align-middle me-1 fas fa-fw fa-user"></i> View Profile</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" asp-controller="Home" asp-action="Logout"><i class="align-middle me-1 fas fa-fw fa-arrow-alt-circle-right"></i> Sign out</a>
+                            {{-- <a class="dropdown-item" asp-controller="Account" asp-action="Index"><i class="align-middle me-1 fas fa-fw fa-user"></i> View Profile</a>
+                            <div class="dropdown-divider"></div> --}}
+                            <form method="post" action="{{ route('logout') }}">
+                                @csrf
+                                <button class="dropdown-item" type="submit"><i class="align-middle me-1 fas fa-fw fa-arrow-alt-circle-right"></i> Sign out</button>
+                            </form>
                         </div>
                     </li>
                 </ul>

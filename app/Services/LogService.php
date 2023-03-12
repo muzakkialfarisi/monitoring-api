@@ -25,7 +25,6 @@ class LogService
 
     public function save_success(array $param, bool $is_success)
     {
-        // dd($param);
         $response_time_accumulation = $this->log_repository
             ->set_main_dealer_id($param["main_dealer_id"])
             ->set_api_id($param["api_id"])

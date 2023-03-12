@@ -166,6 +166,20 @@ class LogRepository
         return $data;
     }
 
+    public function getList(): Object
+    {
+        $data = (new LogModel())->whereNull("deleted_at");
+
+        if(isset($this->main_dealer_id)){
+            $data = $data->where('main_dealer_id', $this->main_dealer_id);
+        }
+
+        return (object) [
+            "total" => $data->count(),
+            "rows" =>  $data->get()
+        ];
+    }
+
     public function get_response_time_accumulation()
     {
         return round((new LogModel())->whereNull('deleted_at')
@@ -174,5 +188,5 @@ class LogRepository
             ->whereDate('created_at', '>=', Carbon::now()->subDays(7))
             ->where('response_time_validation', true)
             ->avg('response_time'), 2);
-        }
+    }
 }

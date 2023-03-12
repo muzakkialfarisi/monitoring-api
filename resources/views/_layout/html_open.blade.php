@@ -11,5 +11,5 @@
 
         <title>Laravel</title>
     </head>
-    <body>
+    <body style="font-size: 14px">
         

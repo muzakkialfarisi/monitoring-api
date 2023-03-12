@@ -5,11 +5,13 @@
         <div class="m-sm-4">
             <div class="row">
                 <div class="col-12 text-center">
-                    <img src="~/img/logo/wms_logo.png" alt="Linda Miller" class="img-fluid" width="150" height="40" />
+                    {{-- <img src="~/img/logo/wms_logo.png" alt="Linda Miller" class="img-fluid" width="150" height="40" /> --}}
                 </div>
             </div>
             <br />
-            <form method="post">
+            <form method="post" action="{{ route('login_process') }}">
+                @csrf
+
                 <div class="form-floating mb-3">
 				    <input class="form-control" asp-for="username" placeholder="username">
 				    <label for="username">Username</label>
