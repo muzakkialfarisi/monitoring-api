@@ -15,7 +15,7 @@ class AuthController extends Controller
 
     public function login_process(Request $request)
     {
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard.index');
     }
 
     public function logout()

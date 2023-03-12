@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Models\MainDealerModel;
+
 class LogModel extends Model
 {
     use SoftDeletes;
@@ -32,4 +34,8 @@ class LogModel extends Model
     ];
 
     protected $hidden = ['deleted_at'];
+
+    public function main_dealer(){
+        return $this->hasOne(MainDealerModel::class, 'id','main_dealer_id');
+    }
 }

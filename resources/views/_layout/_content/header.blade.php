@@ -24,7 +24,7 @@
             </div>
 
             <ul class="sidebar-nav">
-                {{-- @await Component.InvokeAsync("MenuItem"); --}}
+                @include('_layout._content.menu')
             </ul>
 
         </div>

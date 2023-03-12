@@ -10,9 +10,9 @@ $router->group(['prefix' => 'auth'], function () use ($router) {
 });
 
 $router->group(['prefix' => 'dashboard'], function () use ($router) {
-    Route::get('/', 'DashboardController@index')->name('dashboard');
+    Route::get('/', 'DashboardController@index')->name('dashboard.index');
 });
 
 $router->group(['prefix' => 'log'], function () use ($router) {
-    Route::get('/wanda', 'LogController@wanda')->name('wanda');
+    Route::get('/md/{id}', 'LogController@index')->name('log.index');
 });

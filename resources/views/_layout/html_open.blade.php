@@ -7,7 +7,7 @@
         <meta name="description" content="Modern, flexible and responsive Bootstrap 5 admin &amp; dashboard template">
         <meta name="author" content="Bootlab">
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('lib/css/classic.css') }}" >
+        <link rel="stylesheet" type="text/css" href="{{ asset('lib/css/dark.css') }}" >
 
         <title>Laravel</title>
     </head>

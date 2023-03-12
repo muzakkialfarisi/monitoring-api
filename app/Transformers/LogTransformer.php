@@ -13,7 +13,7 @@ class LogTransformer extends Fractal\TransformerAbstract
         $data = [
             'id' => (int) $model->id,
             'main_dealer_id' => (int) $model->main_dealer_id,
-            'main_dealer_name' => $model->main_dealer_name,
+            'main_dealer_name' => $model->main_dealer->name ?? $model->main_dealer_name,
             'feature_id' => (int) $model->feature_id,
             'feature_name' => $model->feature_name,
             'api_id' => (int) $model->api_id,

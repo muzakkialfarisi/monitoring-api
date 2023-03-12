@@ -34,6 +34,9 @@ class LogRepository
         $response_body_validation,
         $response_time_validation;
 
+    private array
+        $relationship = [];
+
     public function set_id(Int $id): self
     {
         $this->id = $id;
@@ -133,6 +136,12 @@ class LogRepository
     public function set_response_time_validation(Int $response_time_validation): self
     {
         $this->response_time_validation = $response_time_validation;
+        return $this;
+    }
+
+    public function set_relationship(array $relationship): self
+    {
+        $this->relationship = $relationship;
         return $this;
     }
 
