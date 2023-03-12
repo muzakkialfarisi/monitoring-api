@@ -9,12 +9,12 @@ use App\Models\ApiModel;
 class ApiRepository
 {
     private Int
-        $id = 0,
-        $back_end_id = 0,
-        $feature_id = 0;
+        $id,
+        $back_end_id,
+        $feature_id;
 
     private bool
-        $is_active = false;
+        $is_active;
 
     private array
         $relationship = [];
@@ -67,19 +67,19 @@ class ApiRepository
     {
         $api_model = $this->api_model->whereNull("deleted_at");
 
-        if($this->id > 0){
+        if(isset($this->id)){
             $api_model = $api_model->where('id', $this->id);
         }
 
-        if($this->back_end_id > 0){
+        if(isset($this->back_end_id)){
             $api_model = $api_model->where('back_end_id', $this->back_end_id);
         }
 
-        if($this->feature_id > 0){
+        if(isset($this->feature_id)){
             $api_model = $api_model->where('feature_id', $this->feature_id);
         }
 
-        if(!empty($this->path)){
+        if(isset($this->path)){
             $api_model = $api_model->where('path', $this->path);
         }
 

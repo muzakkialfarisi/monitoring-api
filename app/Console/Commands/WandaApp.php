@@ -5,6 +5,9 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
 use GuzzleHttp\TransferStats;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ConnectException;
 
 use App\Services\ApiService;
 use App\Services\LogService;
@@ -19,15 +22,13 @@ class WandaApp extends Command
         parent::__construct();
         $this->main_dealer_id = 1;
         $this->back_end_name = 'app';
-
         $this->client = new Client();
-        $this->api_service = new ApiService();
         $this->log_service = new LogService();
     }
 
     public function handle()
     {
-        $api = $this->api_service
+        $api = (new ApiService())
             ->set_main_dealer_id($this->main_dealer_id)
             ->set_back_end_name($this->back_end_name)
             ->getApi();
@@ -45,34 +46,45 @@ class WandaApp extends Command
                         $log_service->set_response_time($stats->getTransferTime());
                     }
                 ]);
-            }
-            catch(ClientErrorResponseException $e){
-                return 1;
-            }
 
-            if(isset($data)){
-                if($data->getStatusCode() == 200){
-                    $return = $this->log_service->save_success([
-                        'main_dealer_id' => $this->main_dealer_id,
-                        'feature_id' => $item['feature_id'],
-                        'feature_name' => $item['feature_name'],
-                        'api_id' => $item['id'],
-                        'url' => $item['url'],
-                        'request_header' => json_encode($item['headers']),
-                        'request_payload' => json_encode($item['body']),
-                        'status_code_factual' => $data->getStatusCode(),
-                        'response_body_factual' => $data->getBody()
-                    ]);
-                }
-                else{
-
-                }
+                $this->log_service->save_success([
+                    'main_dealer_id' => $this->main_dealer_id,
+                    'feature_id' => $item['feature_id'],
+                    'feature_name' => $item['feature_name'],
+                    'api_id' => $item['id'],
+                    'url' => $item['url'],
+                    'request_header' => json_encode($item['headers']),
+                    'request_payload' => json_encode($item['body']),
+                    'status_code_factual' => $data->getStatusCode(),
+                    'response_body_factual' => $data->getBody()
+                ], true);
             }
-    
-            // $this->info('response time = ' . $request_time->getTotaltime());
-            // $this->info('data = ' . $request_timea);
-            // dd(json_decode($data->getBody()));
+            catch(ConnectException $ex){
+                $this->log_service->save_success([
+                    'main_dealer_id' => $this->main_dealer_id,
+                    'feature_id' => $item['feature_id'],
+                    'feature_name' => $item['feature_name'],
+                    'api_id' => $item['id'],
+                    'url' => $item['url'],
+                    'request_header' => json_encode($item['headers']),
+                    'request_payload' => json_encode($item['body']),
+                    'status_code_factual' => 651,
+                    'response_body_factual' => '{"msg":"indicates that an attempt at a connection to the internet was unsuccessful, or an existing connection has been terminated."}'
+                ], false);
+            }
+            catch(RequestException $ex){
+                $this->log_service->save_success([
+                    'main_dealer_id' => $this->main_dealer_id,
+                    'feature_id' => $item['feature_id'],
+                    'feature_name' => $item['feature_name'],
+                    'api_id' => $item['id'],
+                    'url' => $item['url'],
+                    'request_header' => json_encode($item['headers']),
+                    'request_payload' => json_encode($item['body']),
+                    'status_code_factual' => 500,
+                    'response_body_factual' => '{"msg":"Internal Server Error server error response code indicates that the server encountered an unexpected condition that prevented it from fulfilling the request."}'
+                ], false);
+            }
         }
-        
     }
 }

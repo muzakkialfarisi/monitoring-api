@@ -106,7 +106,7 @@ class LogRepository
         return $this;
     }
 
-    public function set_response_body_actual(Int $response_body_actual): self
+    public function set_response_body_actual(string $response_body_actual): self
     {
         $this->response_body_actual = $response_body_actual;
         return $this;
