@@ -12,7 +12,6 @@ class ApiTransformer extends Fractal\TransformerAbstract
     {
         $headers = $this->parseHeaders($model->headers ?? []);
         $body = $this->parseBody($model->body ?? []);
-        $params = $this->parse($model->params ?? []);
 
         $data = [
             'id' => (int) $model->id,
@@ -25,7 +24,7 @@ class ApiTransformer extends Fractal\TransformerAbstract
             'url' => isset($model->back_end->base_url) ? $model->back_end->base_url . $model->path : $model->path,
             'headers' => $headers,
             'body' => $body,
-            'params' => $params,
+            'params' => null,
         ];
 
         return $data;
@@ -33,12 +32,8 @@ class ApiTransformer extends Fractal\TransformerAbstract
 
     private function parseHeaders($models)
     {
-        if (count($models) > 0) {
-            $data['Accept'] = 'application/json';
-            $data['Content-Type'] = 'application/json';
-            foreach ($models as $item) {
-                $data[$item->name] = $item->value;
-            }
+        if (isset($models->value)) {
+            $data = json_decode($models->value, true);
             return $data;
         }
         return [];
@@ -46,23 +41,8 @@ class ApiTransformer extends Fractal\TransformerAbstract
 
     private function parseBody($models)
     {
-        if (count($models) > 0) {
-            $data;
-            foreach ($models as $item) {
-                $data = json_decode($item->value);
-            }
-            return $data;
-        }
-        return [];
-    }
-
-    private function parse($models)
-    {
-        if (count($models) > 0) {
-            $data = [];
-            foreach ($models as $item) {
-                $data[$item->name] = $item->value;
-            }
+        if (isset($models->value)) {
+            $data = json_decode($models->value, true);
             return $data;
         }
         return [];

@@ -48,7 +48,7 @@
 								</div>
 							</div>
 							<h1 class="display-5 mt-2 mb-4">
-								13
+								{{ $main_dealer->total }}
 							</h1>
 							<div class="mb-0">
 								<span class="text-primary"> <i class="mdi mdi-arrow-bottom-right"></i>
@@ -73,7 +73,7 @@
 								</div>
 							</div>
 							<h1 class="display-5 mt-2 mb-4">
-								153
+								{{ $feature->total }}
 							</h1>
 							<div class="mb-0">
 								<span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 
@@ -100,7 +100,7 @@
 								</div>
 							</div>
 							<h1 class="display-5 mt-2 mb-4">
-								518
+								{{ $api->total }}
 							</h1>
 						</div>
 					</div>
@@ -120,7 +120,7 @@
 								</div>
 							</div>
 							<h1 class="display-5 mt-2 mb-4">
-                                0
+								{{ $log->total }}
                             </h1>
 							<div class="mb-0">
 								<span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 

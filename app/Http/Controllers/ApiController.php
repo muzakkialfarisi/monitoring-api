@@ -24,10 +24,35 @@ class ApiController extends Controller
         return view('api/index')->with(['data' => $data]);
     }
 
-    public function upsert(Request $request, $main_dealer_id = null, $id = null)
+    public function upsert($main_dealer_id = null, $id = null)
     {
         $data = (new MainDealerRepository())
                 ->set_id($main_dealer_id ?? 0)
+                ->getFirst();
+
+        $data['api'] = (new ApiRepository())
+                ->set_relationship(['headers', 'body'])
+                ->set_id($id ?? 0)
+                ->getFirst();
+
+        $data['back_end'] = (new BackEndRepository())
+                ->set_main_dealer_id($main_dealer_id ?? 0)
+                ->getList();
+        
+        $data['feature'] = (new FeatureRepository())
+                ->getList();
+                
+        return view('api/upsert')->with(['data' => $data]);
+    }
+
+    public function upsert_process(Request $request, $main_dealer_id = null, $id = null)
+    {
+        $data = (new MainDealerRepository())
+                ->set_id($main_dealer_id ?? 0)
+                ->getFirst();
+
+        $data['api'] = (new ApiRepository())
+                ->set_id($id ?? 0)
                 ->getFirst();
 
         $data['backend'] = (new BackEndRepository())

@@ -4,7 +4,7 @@
     <div class="card-header border-bottom">
         <div class="d-flex align-items-center">
             <div class="flex-grow-1 ps-3">
-                <h5 class="card-title"><strong>API {{ $data['name'] ?? "To Be Announced" }}</strong></h5>
+                <h5 class="card-title"><strong>API {{ $data->name ?? "To Be Announced" }}</strong></h5>
             </div>
             <div class="row">
                 <div class="col">
@@ -51,7 +51,7 @@
                                 <button type="button" class="btn btn-sm btn-outline-tertiary" data-bs-toggle="dropdown"><i class="fas fa-fw fa-ellipsis-h"></i></button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item text-warning">Edit</a>
+                                        <a class="dropdown-item text-warning" href="{{ route('api.upsert', ['main_dealer_id' => $data->id, 'id' => $item->id]) }}">Edit</a>
                                         <li><hr class="dropdown-divider"></li>
                                         <a class="dropdown-item text-danger">Delete</a>
                                     </li>
@@ -70,12 +70,12 @@
                                 {{$item['back_end']['base_url'].$item['path']}}
                             </td>
                             <td class="text-center">
-                                @if (count($item['headers'])> 0) 
+                                @if (isset($item['headers'])) 
                                     <i class='fas fa-check-circle'></i>
                                 @endif
                             </td>
                             <td class="text-center">
-                                @if (count($item['body'])> 0) 
+                                @if (isset($item['body'])) 
                                     <i class='fas fa-check-circle'></i>
                                 @endif
                             </td>

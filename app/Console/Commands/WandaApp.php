@@ -38,7 +38,7 @@ class WandaApp extends Command
             ->getApi();
 
         $log_service = $this->log_service;
-
+        
         foreach($api->rows as $item){
             try{
                 $data = $this->client->request(

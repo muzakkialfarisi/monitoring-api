@@ -1,93 +1,5 @@
 @include('_layout._content.header')
 
-{{-- <div class="card" style="min-height:700px">
-    <div class="card-header border-bottom">
-        <div class="d-flex align-items-center">
-            <div class="flex-grow-1 ps-3">
-                <h5 class="card-title"><strong>Log</strong></h5>
-            </div>
-        </div>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr class="text-center">
-                        <th>
-                            Action
-                        </th>
-                        <th>
-                            Main Dealer
-                        </th>
-                        <th>
-                            Feature
-                        </th>
-                        <th>
-                            URL
-                        </th>
-                        <th>
-                            Status Code
-                        </th>
-                        <th>
-                            Response Body 
-                        </th>
-                        <th>
-                            Response Time
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($data->rows as $item)
-                        <tr>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-outline-tertiary" data-bs-toggle="dropdown"><i class="fas fa-fw fa-ellipsis-h"></i></button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" asp-action="Detail" asp-route-DONumber="@item.DONumber" asp-route-TenantId="@item.TenantId">Details</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" asp-controller="Print" asp-action="DeliveryOrderManifest" asp-route-DONumber="@item.DONumber" target="_blank">Print Manifes Delivery Order</a>
-                                    </li>
-                                </ul>
-                            </td>
-                            <td>
-                                {{$item['main_dealer_name']}}
-                            </td>
-                            <td>
-                                {{$item['feature_name']}}
-                            </td>
-                            <td>
-                                {{$item['url']}}
-                            </td>
-                            <td class="text-center">
-                                @if($item['status_code_validation'] == true)
-                                    <span class="badge bg-success"> true </span>
-                                @else
-                                    <span class="badge bg-danger"> false </span>
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                @if($item['response_body_validation'] == true)
-                                    <span class="badge bg-success"> true </span>
-                                @else
-                                    <span class="badge bg-danger"> false </span>
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                @if($item['response_time_validation'] == true)
-                                    <span class="badge bg-success"> true </span>
-                                @else
-                                    <span class="badge bg-danger"> false </span>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div> --}}
-
 @include('dashboard.chart')
 
 @push('scripts')
@@ -97,6 +9,7 @@
                 order: [[4, 'desc']],
             });
             setTimeout(function () {
+                var cek = 1;
                 new Chart(document.getElementById("chartjs-dashboard-bar-alt"), {
                     type: "bar",
                     data: {
@@ -116,7 +29,7 @@
                             borderColor: window.theme.dark,
                             hoverBackgroundColor: window.theme.dark,
                             hoverBorderColor: window.theme.dark,
-                            data: [10, 50, 12, 14, 10, 50, 12, 14, 10, 50, 12, 14],
+                            data: [10, 50, cek, 14, 10, 50, 12, 14, 10, 50, 12, 14],
                             barPercentage: .75,
                             categoryPercentage: .5
                         }, {

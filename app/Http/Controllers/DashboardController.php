@@ -3,20 +3,32 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\MainDealerRepository;
+use App\Repositories\FeatureRepository;
+use App\Repositories\ApiRepository;
 use App\Repositories\LogRepository;
-
-use App\Transformers\Transformer;
-use App\Transformers\LogTransformer;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $data = (new LogRepository())
+        $main_dealer = (new MainDealerRepository())
             ->getList();
 
-        $data->rows = (new Transformer())->buildCollection($data->rows, new LogTransformer);
+        $feature = (new FeatureRepository())
+            ->getList();
 
-        return view('dashboard/index')->with(['data' => $data]);
+        $api = (new ApiRepository())
+            ->getList();
+
+        $log = (new LogRepository())
+            ->getFailur();
+
+        return view('dashboard/index')->with([
+            'main_dealer' => $main_dealer,
+            'feature' => $feature,
+            'api' => $api,
+            'log' => $log,
+        ]);
     }
 }

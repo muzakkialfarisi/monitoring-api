@@ -189,6 +189,20 @@ class LogRepository
         ];
     }
 
+    public function getFailur(): Object
+    {
+        $data = (new LogModel())->whereNull("deleted_at");
+
+        $data = $data->where('status_code_validation', false)
+        ->orWhere('response_body_validation', false)
+        ->orWhere('response_time_validation', false);
+
+        return (object) [
+            "total" => $data->count(),
+            "rows" =>  $data->get()
+        ];
+    }
+
     public function get_response_time_accumulation()
     {
         return round((new LogModel())->whereNull('deleted_at')

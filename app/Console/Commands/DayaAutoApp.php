@@ -29,7 +29,7 @@ class DayaAutoApp extends Command
         $this->client = new Client();
         $this->log_service = new LogService();
     }
-    
+
     public function handle()
     {
         $api = (new ApiService())
@@ -38,7 +38,7 @@ class DayaAutoApp extends Command
             ->getApi();
 
         $log_service = $this->log_service;
-
+        
         foreach($api->rows as $item){
             try{
                 $data = $this->client->request(

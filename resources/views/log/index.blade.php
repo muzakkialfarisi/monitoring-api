@@ -39,10 +39,10 @@
                             status code
                         </th>
                         <th>
-                            response body 
+                            response time
                         </th>
                         <th>
-                            response time
+                            response body
                         </th>
                     </tr>
                 </thead>
@@ -67,22 +67,32 @@
                             <td class="text-center">
                                 {{$item['created_at']}}
                             </td>
+                            <td>
+                                <ul class="list-group">
+                                    <li class="d-flex justify-content-between align-items-center">
+                                        Fac
+                                        <span class="badge bg-success rounded-pill">{{ $item['status_code_actual'] }}</span>
+                                    </li>
+                                    <li class="d-flex justify-content-between align-items-center">
+                                        Act
+                                        <span class="badge {{ $item['status_code_validation'] === 1 ? 'bg-success' : 'bg-danger' }} rounded-pill">{{ $item['status_code_factual'] }}</span>
+                                    </li>
+                                </ul>
+                            </td>
                             <td class="text-center">
-                                @if($item['status_code_validation'] == true)
-                                    <span class="badge bg-success"> success </span>
-                                @else
-                                    <span class="badge bg-danger"> failed </span>
-                                @endif
+                                <ul class="list-group">
+                                    <li class="d-flex justify-content-between align-items-center">
+                                        Avg
+                                        <span class="badge bg-success rounded-pill">{{ $item['response_time_accumulation'] }}</span>
+                                    </li>
+                                    <li class="d-flex justify-content-between align-items-center">
+                                        Res
+                                        <span class="badge {{ $item['response_time_validation'] === 1 ? 'bg-success' : 'bg-danger' }} rounded-pill">{{ $item['response_time'] }}</span>
+                                    </li>
+                                </ul>
                             </td>
                             <td class="text-center">
                                 @if($item['response_body_validation'] == true)
-                                    <span class="badge bg-success"> success </span>
-                                @else
-                                    <span class="badge bg-danger"> failed </span>
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                @if($item['response_time_validation'] == true)
                                     <span class="badge bg-success"> success </span>
                                 @else
                                     <span class="badge bg-danger"> failed </span>

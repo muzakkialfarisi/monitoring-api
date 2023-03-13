@@ -4,13 +4,17 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
-use GuzzleHttp\TransferStats;
 use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\TransferStats;
 
 use App\Services\ApiService;
 use App\Services\LogService;
+use Illuminate\Support\Facades\Log;
+use GuzzleHttp\Post\PostBodyInterface;
+use GuzzleHttp\Stream\StreamInterface;
 
 class MotorkuXApp extends Command
 {
@@ -34,18 +38,20 @@ class MotorkuXApp extends Command
             ->getApi();
 
         $log_service = $this->log_service;
-
+        
         foreach($api->rows as $item){
             try{
-                $data = $this->client->get(
-                    $item['url'], [
-                    'headers' => $item['headers'],
-                    'query' =>  json_encode($item['params']),
-                    'body' =>  json_encode($item['body']),
-                    'on_stats' => function (TransferStats $stats) use ($log_service)  {
-                        $log_service->set_response_time($stats->getTransferTime());
-                    }
-                ]);
+                $data = $this->client->request(
+                    $item['method'],
+                    $item['url'], 
+                    [
+                        'headers' => $item['headers'],
+                        'body' => json_encode($item['body']),
+                        'on_stats' => function (TransferStats $stats) use ($log_service)  {
+                            $log_service->set_response_time($stats->getTransferTime());
+                        }
+                    ]
+                );
 
                 $this->log_service->save_success([
                     'main_dealer_id' => $this->main_dealer_id,

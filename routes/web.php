@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', 'AuthController@login')->name('login');
 
 $router->group(['prefix' => 'auth'], function () use ($router) {
-    Route::get('/login', 'AuthController@login')->name('login');
     Route::post('/login', 'AuthController@login_process')->name('login_process');
     Route::post('/logout', 'AuthController@logout')->name('logout');
 });
@@ -23,7 +23,8 @@ $router->group(['prefix' => 'feature'], function () use ($router) {
 
 $router->group(['prefix' => 'api'], function () use ($router) {
     Route::get('/md/{main_dealer_id}', 'ApiController@index')->name('api.index');
-    Route::get('/md/{main_dealer_id}/upsert', 'ApiController@upsert')->name('api.upsert');
+    Route::get('/md/{main_dealer_id}/upsert/{id?}', 'ApiController@upsert')->name('api.upsert');
+    Route::post('/md/{main_dealer_id}/upsert/{id?}', 'ApiController@upsert_process')->name('api.upsert.process');
 });
 
 $router->group(['prefix' => 'log'], function () use ($router) {

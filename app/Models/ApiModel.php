@@ -31,14 +31,14 @@ class ApiModel extends Model
     }
 
     public function body(){
-        return $this->hasMany(BodyModel::class, 'api_id', 'id');
+        return $this->hasOne(BodyModel::class, 'api_id', 'id');
     }
 
     public function params(){
-        return $this->hasMany(ParamsModel::class, 'api_id', 'id');
+        return $this->hasOne(ParamsModel::class, 'api_id', 'id');
     }
 
     public function headers(){
-        return $this->hasMany(HeadersModel::class, 'api_id', 'id');
+        return $this->hasOne(HeadersModel::class, 'api_id', 'id');
     }
 }
