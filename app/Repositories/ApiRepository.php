@@ -10,6 +10,7 @@ class ApiRepository
 {
     private Int
         $id,
+        $main_dealer_id,
         $back_end_id,
         $feature_id;
 
@@ -51,6 +52,12 @@ class ApiRepository
         return $this;
     }
 
+    public function set_main_dealer_id(string $main_dealer_id): self
+    {
+        $this->main_dealer_id = $main_dealer_id;
+        return $this;
+    }
+
     public function set_is_active(bool $is_active): self
     {
         $this->is_active = $is_active;
@@ -71,6 +78,10 @@ class ApiRepository
             $api_model = $api_model->where('id', $this->id);
         }
 
+        if(isset($this->main_dealer_id)){
+            $api_model = $api_model->where('main_dealer_id', $this->main_dealer_id);
+        }
+
         if(isset($this->back_end_id)){
             $api_model = $api_model->where('back_end_id', $this->back_end_id);
         }
@@ -81,6 +92,10 @@ class ApiRepository
 
         if(isset($this->path)){
             $api_model = $api_model->where('path', $this->path);
+        }
+
+        if(isset($this->is_active)){
+            $api_model = $api_model->where('is_active', $this->is_active);
         }
 
         if(count($this->relationship) > 0){

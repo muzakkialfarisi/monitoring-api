@@ -29,6 +29,7 @@ class LogTransformer extends Fractal\TransformerAbstract
             'response_time' => $model->response_time,
             'response_time_accumulation' => $model->response_time_accumulation,
             'response_time_validation' => $model->response_time_validation,
+            'created_at' => $model->created_at,
         ];
         
         return $data;

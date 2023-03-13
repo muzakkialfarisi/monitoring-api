@@ -4,16 +4,11 @@
     <div class="card-header border-bottom">
         <div class="d-flex align-items-center">
             <div class="flex-grow-1 ps-3">
-                <h5 class="card-title"><strong>Log {{ $data->name }}</strong></h5>
+                <h5 class="card-title"><strong>API {{ $data['name'] ?? "To Be Announced" }}</strong></h5>
             </div>
             <div class="row">
                 <div class="col">
-                    <div class="input-group">
-                        <button class="btn btn-outline-primary" data-bs-toggle="dropdown">Export</button>
-                        <div class="dropdown-menu">
-                            <button class="dropdown-item btn-export" data-id="Excel" target="_blank">Excel</button>
-                        </div>
-                    </div>
+                    <a class="btn btn-primary">Add New API</a>
                 </div>
             </div>
         </div>
@@ -27,65 +22,68 @@
                             action
                         </th>
                         <th>
+                            id
+                        </th>
+                        <th>
+                            back end
+                        </th>
+                        <th>
                             feature
                         </th>
                         <th>
                             url
                         </th>
                         <th>
-                            created
+                            is_header
                         </th>
                         <th>
-                            status code
+                            is_body
                         </th>
                         <th>
-                            response body 
-                        </th>
-                        <th>
-                            response time
+                            status
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($data->log->rows as $item)
+                    @foreach($data->api->rows as $item)
                         <tr>
                             <td class="text-center">
                                 <button type="button" class="btn btn-sm btn-outline-tertiary" data-bs-toggle="dropdown"><i class="fas fa-fw fa-ellipsis-h"></i></button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item">Detail</a>
-                                        <a class="dropdown-item">TBA</a>
+                                        <a class="dropdown-item text-warning">Edit</a>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <a class="dropdown-item text-danger">Delete</a>
                                     </li>
                                 </ul>
                             </td>
                             <td>
-                                {{$item['feature_name']}}
+                                {{$item['id']}}
                             </td>
                             <td>
-                                {{$item['url']}}
+                                {{$item['back_end']['name']}}
+                            </td>
+                            <td>
+                                {{$item['feature']['name']}}
+                            </td>
+                            <td>
+                                {{$item['back_end']['base_url'].$item['path']}}
                             </td>
                             <td class="text-center">
-                                {{$item['created_at']}}
-                            </td>
-                            <td class="text-center">
-                                @if($item['status_code_validation'] == true)
-                                    <span class="badge bg-success"> success </span>
-                                @else
-                                    <span class="badge bg-danger"> failed </span>
+                                @if (count($item['headers'])> 0) 
+                                    <i class='fas fa-check-circle'></i>
                                 @endif
                             </td>
                             <td class="text-center">
-                                @if($item['response_body_validation'] == true)
-                                    <span class="badge bg-success"> success </span>
-                                @else
-                                    <span class="badge bg-danger"> failed </span>
+                                @if (count($item['body'])> 0) 
+                                    <i class='fas fa-check-circle'></i>
                                 @endif
                             </td>
                             <td class="text-center">
-                                @if($item['response_time_validation'] == true)
-                                    <span class="badge bg-success"> success </span>
+                                @if($item['is_active'] == true)
+                                    <span class="badge bg-success"> active </span>
                                 @else
-                                    <span class="badge bg-danger"> failed </span>
+                                    <span class="badge bg-warning"> nonactive </span>
                                 @endif
                             </td>
                         </tr>

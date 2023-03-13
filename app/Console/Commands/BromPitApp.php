@@ -4,27 +4,23 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
+use GuzzleHttp\TransferStats;
 use GuzzleHttp\Psr7;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ConnectException;
-use GuzzleHttp\TransferStats;
 
 use App\Services\ApiService;
 use App\Services\LogService;
-use Illuminate\Support\Facades\Log;
-use GuzzleHttp\Post\PostBodyInterface;
-use GuzzleHttp\Stream\StreamInterface;
 
-class WandaApp extends Command
+class BromPitApp extends Command
 {
-    protected $signature = 'wanda:app';
+    protected $signature = 'brompit:app';
     protected $description = 'Command description';
 
     public function __construct()
     {
         parent::__construct();
-        $this->main_dealer_id = 1;
+        $this->main_dealer_id = 3;
         $this->back_end_name = 'app';
         $this->client = new Client();
         $this->log_service = new LogService();
@@ -41,17 +37,15 @@ class WandaApp extends Command
 
         foreach($api->rows as $item){
             try{
-                $data = $this->client->request(
-                    $item['method'],
-                    $item['url'], 
-                    [
-                        'headers' => $item['headers'],
-                        'body' => json_encode($item['body']),
-                        'on_stats' => function (TransferStats $stats) use ($log_service)  {
-                            $log_service->set_response_time($stats->getTransferTime());
-                        }
-                    ]
-                );
+                $data = $this->client->get(
+                    $item['url'], [
+                    'headers' => $item['headers'],
+                    'query' =>  json_encode($item['params']),
+                    'body' =>  json_encode($item['body']),
+                    'on_stats' => function (TransferStats $stats) use ($log_service)  {
+                        $log_service->set_response_time($stats->getTransferTime());
+                    }
+                ]);
 
                 $this->log_service->save_success([
                     'main_dealer_id' => $this->main_dealer_id,

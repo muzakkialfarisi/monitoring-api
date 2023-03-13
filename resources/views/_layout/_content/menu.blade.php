@@ -1,9 +1,22 @@
 <li class="sidebar-header">
     main
 </li>
-<li class="sidebar-item active">
+<li class="sidebar-item">
     <a class="sidebar-link" href="{{ route('dashboard.index') }}">
         <i class="align-middle me-2 fas fa-fw fa-home"></i> <span class="align-middle">Dashboard</span>
+    </a>
+</li>
+<li class="sidebar-header">
+    maintenance
+</li>
+<li class="sidebar-item">
+    <a class="sidebar-link" href="{{ route('maindealer.index') }}">
+        <i class="align-middle me-2 fas fa-fw fa-fire"></i> <span class="align-middle">Main Dealer API</span>
+    </a>
+</li>
+<li class="sidebar-item">
+    <a class="sidebar-link" href="{{ route('feature.index') }}">
+        <i class="align-middle me-2 fas fa-fw fa-brain"></i> <span class="align-middle">Feature</span>
     </a>
 </li>
 <li class="sidebar-header">

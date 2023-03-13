@@ -43,6 +43,7 @@ class ApiService
 
         $data = (new ApiRepository())
             ->set_back_end_id($back_end->id)
+            ->set_is_active(true)
             ->set_relationship([
                 'back_end', 'headers', 'body', 'params'
             ])

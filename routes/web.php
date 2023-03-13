@@ -13,6 +13,18 @@ $router->group(['prefix' => 'dashboard'], function () use ($router) {
     Route::get('/', 'DashboardController@index')->name('dashboard.index');
 });
 
+$router->group(['prefix' => 'maindealer'], function () use ($router) {
+    Route::get('/', 'MainDealerController@index')->name('maindealer.index');
+});
+
+$router->group(['prefix' => 'feature'], function () use ($router) {
+    Route::get('/', 'FeatureController@index')->name('feature.index');
+});
+
+$router->group(['prefix' => 'api'], function () use ($router) {
+    Route::get('/md/{main_dealer_id}', 'ApiController@index')->name('api.index');
+});
+
 $router->group(['prefix' => 'log'], function () use ($router) {
     Route::get('/md/{id}', 'LogController@index')->name('log.index');
 });

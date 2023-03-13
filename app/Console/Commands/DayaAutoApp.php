@@ -16,20 +16,20 @@ use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Post\PostBodyInterface;
 use GuzzleHttp\Stream\StreamInterface;
 
-class WandaApp extends Command
+class DayaAutoApp extends Command
 {
-    protected $signature = 'wanda:app';
+    protected $signature = 'daya:app';
     protected $description = 'Command description';
 
     public function __construct()
     {
         parent::__construct();
-        $this->main_dealer_id = 1;
+        $this->main_dealer_id = 4;
         $this->back_end_name = 'app';
         $this->client = new Client();
         $this->log_service = new LogService();
     }
-
+    
     public function handle()
     {
         $api = (new ApiService())
