@@ -8,7 +8,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <a class="btn btn-primary">Add New Main Dealer</a>
+                    <a class="btn btn-primary btn-pill">Add New Main Dealer</a>
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <a class="btn btn-sm btn-primary">Add New Feature</a>
+                    <a class="btn btn-primary btn-pill">Add New Feature</a>
                 </div>
             </div>
         </div>
@@ -19,16 +19,16 @@
                 <thead>
                     <tr class="text-center">
                         <th>
-                            Action
+                            action
                         </th>
                         <th>
-                            ID
+                            id
                         </th>
                         <th>
-                            Name
+                            name
                         </th>
                         <th>
-                            Status
+                            status
                         </th>
                     </tr>
                 </thead>

@@ -58,7 +58,7 @@ class BackEndRepository
         return $this;
     }
 
-    public function getFirst(): Object
+    public function getFirst()
     {
         $data = (new BackEndModel())->whereNull("deleted_at");
 
@@ -82,6 +82,42 @@ class BackEndRepository
             $data = $$data->with($this->relationship);
         }
 
-        return $data->first();
+        $data = $data->first();
+
+        if(!$data){
+            return false;
+        }
+
+        return $data;
+    }
+
+    public function getList(): Object
+    {
+        $data = (new BackEndModel())->whereNull("deleted_at");
+
+        if($this->id > 0){
+            $data = $data->where('id', $this->id);
+        }
+
+        if($this->main_dealer_id > 0){
+            $data = $data->where('main_dealer_id', $this->main_dealer_id);
+        }
+
+        if(!empty($this->name)){
+            $data = $data->where('name', $this->name);
+        }
+
+        if(!empty($this->base_url)){
+            $$data = $$data->where('base_url', $this->base_url);
+        }
+
+        if(count($this->relationship) > 0){
+            $data = $$data->with($this->relationship);
+        }
+
+        return (object) [
+            "total" => $data->count(),
+            "rows" =>  $data->get()
+        ];
     }
 }

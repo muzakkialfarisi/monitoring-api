@@ -35,7 +35,7 @@ class MainDealerRepository
         return $this;
     }
 
-    public function getFirst(): Object
+    public function getFirst()
     {
         $data = (new MainDealerModel())->whereNull("deleted_at");
 
@@ -53,7 +53,11 @@ class MainDealerRepository
        
         $data = $data->first();
 
-        return (object) $data;
+        if(!$data){
+            return false;
+        }
+
+        return $data;
     }
 
     public function getList(): Object

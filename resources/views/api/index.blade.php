@@ -8,7 +8,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <a class="btn btn-primary">Add New API</a>
+                    <a class="btn btn-primary btn-pill" href="{{ route('api.upsert', $data['id']) }}">Add New API</a>
                 </div>
             </div>
         </div>
