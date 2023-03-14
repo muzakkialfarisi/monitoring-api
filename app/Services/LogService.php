@@ -55,7 +55,7 @@ class LogService
                 }
             }
         }
-        
+
         if($api->is_check_status_code == true){
             if($api->response_body_actual <> $param["response_body_factual"]){
                 $param["response_body_validation"] = false;
@@ -94,7 +94,7 @@ class LogService
 
             if($api->is_push_email == true){
                 \Mail::to('mzkalfarisi@gmail.com')
-                    ->cc(['muzakki.ahmadalfarisi@hso.astra.co.id','yuniafransiscau@gmail.com'])
+                    ->cc(['muzakki.ahmadalfarisi@hso.astra.co.id'])
                     ->send(new SendMail([
                         'title' => 'Alert for your API',
                         'data' => $log
