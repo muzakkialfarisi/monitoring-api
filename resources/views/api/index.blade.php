@@ -8,7 +8,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <a class="btn btn-primary btn-pill" href="{{ route('api.upsert', $data['id']) }}">Add New API</a>
+                    <a class="btn btn-primary btn-pill" href="{{ route('api.upsert', ['main_dealer_id' => $data->id]) }}">Add New API</a>
                 </div>
             </div>
         </div>
@@ -32,6 +32,9 @@
                         </th>
                         <th>
                             url
+                        </th>
+                        <th>
+                            is_push_email
                         </th>
                         <th>
                             is_header
@@ -68,6 +71,11 @@
                             </td>
                             <td>
                                 {{$item['back_end']['base_url'].$item['path']}}
+                            </td>
+                            <td class="text-center">
+                                @if ($item['is_push_email'] == true) 
+                                    <i class='fas fa-check-circle'></i>
+                                @endif
                             </td>
                             <td class="text-center">
                                 @if (isset($item['headers'])) 

@@ -13,11 +13,20 @@ class MainDealerRepository
 
     private bool
         $is_active;
+    
+    private string
+        $name;
 
     private array
         $relationship = [];
 
     public function set_id(Int $id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    public function set_name(string $set_name): self
     {
         $this->id = $id;
         return $this;
@@ -41,6 +50,10 @@ class MainDealerRepository
 
         if(isset($this->id)){
             $data = $data->where('id', $this->id);
+        }
+
+        if(isset($this->name)){
+            $data = $data->where('name', $this->name);
         }
 
         if(isset($this->is_active)){

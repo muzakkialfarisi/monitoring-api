@@ -49,6 +49,12 @@ class LogRepository
         return $this;
     }
 
+    public function set_main_dealer_name(string $main_dealer_name): self
+    {
+        $this->main_dealer_name = $main_dealer_name;
+        return $this;
+    }
+
     public function set_feature_id(Int $feature_id): self
     {
         $this->feature_id = $feature_id;
@@ -203,13 +209,23 @@ class LogRepository
         ];
     }
 
-    public function get_response_time_accumulation()
+    public function getAverageResponseTime()
     {
-        return round((new LogModel())->whereNull('deleted_at')
-            ->where('main_dealer_id', $this->main_dealer_id ?? 0)
-            ->where('api_id', $this->api_id ?? 0)
-            ->whereDate('created_at', '>=', Carbon::now()->subDays(7))
-            ->where('response_time_validation', true)
-            ->avg('response_time'), 2);
+        $data = (new LogModel())->whereNull('deleted_at')
+        ->whereDate('created_at', Carbon::today())
+        ->where('is_active', true)
+        ->where('response_time_validation', true);
+
+        if(isset($this->main_dealer_id)){
+            $data = $data->where('main_dealer_id', $this->main_dealer_id);
+        }
+
+        if(isset($this->api_id)){
+            $data = $data->where('api_id', $this->api_id);
+        }
+
+        $data = $data->avg('response_time');
+
+        return round($data, 2);
     }
 }

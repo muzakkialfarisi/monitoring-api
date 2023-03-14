@@ -31,7 +31,6 @@ class ApiController extends Controller
                 ->getFirst();
 
         $data['api'] = (new ApiRepository())
-                ->set_relationship(['headers', 'body'])
                 ->set_id($id ?? 0)
                 ->getFirst();
 

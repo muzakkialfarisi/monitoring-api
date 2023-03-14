@@ -10,9 +10,6 @@ class ApiTransformer extends Fractal\TransformerAbstract
 {
     public function transform(ApiModel $model)
     {
-        $headers = $this->parseHeaders($model->headers ?? []);
-        $body = $this->parseBody($model->body ?? []);
-
         $data = [
             'id' => (int) $model->id,
             'back_end_id' => (int) $model->back_end_id,
@@ -22,29 +19,11 @@ class ApiTransformer extends Fractal\TransformerAbstract
             'base_url' => $model->back_end->base_url ?? null,
             'path' => $model->path,
             'url' => isset($model->back_end->base_url) ? $model->back_end->base_url . $model->path : $model->path,
-            'headers' => $headers,
-            'body' => $body,
+            'headers' => json_decode($model->headers, true) ?? [],
+            'body' => json_decode($model->body, true) ?? [],
             'params' => null,
         ];
 
         return $data;
-    }
-
-    private function parseHeaders($models)
-    {
-        if (isset($models->value)) {
-            $data = json_decode($models->value, true);
-            return $data;
-        }
-        return [];
-    }
-
-    private function parseBody($models)
-    {
-        if (isset($models->value)) {
-            $data = json_decode($models->value, true);
-            return $data;
-        }
-        return [];
     }
 }

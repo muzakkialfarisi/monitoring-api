@@ -4,17 +4,12 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\TransferStats;
 
 use App\Services\ApiService;
 use App\Services\LogService;
-use Illuminate\Support\Facades\Log;
-use GuzzleHttp\Post\PostBodyInterface;
-use GuzzleHttp\Stream\StreamInterface;
 
 class DayaAutoApp extends Command
 {

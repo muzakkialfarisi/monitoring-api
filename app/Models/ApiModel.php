@@ -6,10 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\MainDealerModel;
-use App\Models\BackEndModel;
-use App\Models\HeadersModel;
-use App\Models\ParamsModel;
-use App\Models\BodyModel;
+use App\Models\BackEndModel;;
+use App\Models\FeatureModel;
 
 class ApiModel extends Model
 {
@@ -17,7 +15,20 @@ class ApiModel extends Model
 
     protected $table = 'api';
     protected $dateFormat = "Y-m-d H:i:s";
-    protected $fillable = [];
+    protected $fillable = [
+        'back_end_id',
+        'feature_id',
+        'path',
+        'is_active',
+        'method',
+        'main_dealer_id',
+        'headers',
+        'params',
+        'body',
+        'status_code_validation',
+        'response_time_validation',
+        'response_body_validation',
+    ];
 
     protected $hidden = ['deleted_at'];
 
@@ -30,15 +41,7 @@ class ApiModel extends Model
         return $this->hasOne(FeatureModel::class, 'id','feature_id');
     }
 
-    public function body(){
-        return $this->hasOne(BodyModel::class, 'api_id', 'id');
-    }
-
-    public function params(){
-        return $this->hasOne(ParamsModel::class, 'api_id', 'id');
-    }
-
-    public function headers(){
-        return $this->hasOne(HeadersModel::class, 'api_id', 'id');
+    public function main_dealer(){
+        return $this->hasOne(MainDealerModel::class, 'id','main_dealer_id');
     }
 }

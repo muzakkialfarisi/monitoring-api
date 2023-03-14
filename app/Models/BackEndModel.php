@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Models\MainDealerModel;
+
 class BackEndModel extends Model
 {
     use SoftDeletes;
@@ -14,4 +16,8 @@ class BackEndModel extends Model
     protected $fillable = [];
 
     protected $hidden = ['deleted_at'];
+
+    public function main_dealer(){
+        return $this->hasOne(MainDealer::class, 'id','main_dealer_id');
+    }
 }

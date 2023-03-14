@@ -15,7 +15,10 @@ class ApiRepository
         $feature_id;
 
     private bool
-        $is_active;
+        $is_active,
+        $status_code_validation,
+        $response_time_validation,
+        $response_body_validation;
 
     private array
         $relationship = [];
@@ -55,6 +58,24 @@ class ApiRepository
     public function set_main_dealer_id(string $main_dealer_id): self
     {
         $this->main_dealer_id = $main_dealer_id;
+        return $this;
+    }
+
+    public function set_status_code_validation(bool $status_code_validation): self
+    {
+        $this->status_code_validation = $status_code_validation;
+        return $this;
+    }
+
+    public function set_response_time_validation(bool $response_time_validation): self
+    {
+        $this->response_time_validation = $response_time_validation;
+        return $this;
+    }
+
+    public function set_response_body_validation(bool $response_body_validation): self
+    {
+        $this->response_body_validation = $response_body_validation;
         return $this;
     }
 
@@ -147,5 +168,54 @@ class ApiRepository
             "total" => $api_model->count(),
             "rows" =>  $api_model->get()
         ];
+    }
+
+    public function create($param)
+    {
+        $data = (new ApiModel())->create($param);    
+        
+        if(!$data){
+            return false;
+        }
+
+        return $data;
+    }
+
+    public function update($param)
+    {
+        $data = (new ApiModel())->whereNull("deleted_at");
+
+        if(isset($this->id)){
+            $data = $data->where('id', $this->id);
+        }
+
+        if(isset($this->main_dealer_id)){
+            $data = $data->where('main_dealer_id', $this->main_dealer_id);
+        }
+
+        if(isset($this->back_end_id)){
+            $data = $data->where('back_end_id', $this->back_end_id);
+        }
+
+        if(isset($this->feature_id)){
+            $data = $data->where('feature_id', $this->feature_id);
+        }
+
+        if(isset($this->path)){
+            $data = $data->where('path', $this->path);
+        }
+
+        if(isset($this->is_active)){
+            $data = $data->where('is_active', $this->is_active);
+        }
+
+        $data = $data
+            ->update($param);
+
+        if(!$data){
+            return false;
+        }
+
+        return $data;
     }
 }
