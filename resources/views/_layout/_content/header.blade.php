@@ -1,8 +1,8 @@
 @include('_layout.html_open')
 
-<div class="splash active">
+{{-- <div class="splash active">
     <div class="splash-icon"></div>
-</div>
+</div> --}}
 
 <div class="wrapper">
     <nav id="sidebar" class="sidebar">

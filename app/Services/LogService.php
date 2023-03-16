@@ -103,7 +103,7 @@ class LogService
 
             if($api->is_push_email == true){
                 \Mail::to('mzkalfarisi@gmail.com')
-                    ->cc(['muzakki.ahmadalfarisi@hso.astra.co.id'])
+                    ->cc(['muzakki.ahmadalfarisi@hso.astra.co.id', 'anggaagustira@gmail.com'])
                     ->send(new SendMail([
                         'title' => 'Alert for your API',
                         'data' => $log

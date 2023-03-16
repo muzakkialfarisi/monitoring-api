@@ -40,9 +40,9 @@
                                 <button type="button" class="btn btn-sm btn-outline-tertiary" data-bs-toggle="dropdown"><i class="fas fa-fw fa-ellipsis-h"></i></button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item text-warning" href="{{ route('api.detail', ['main_dealer_id' => $item['main_dealer']['id'], 'id' => $item['id']]) }}">Detail</a>
+                                        <a class="dropdown-item" href="{{ route('api.detail', ['main_dealer_id' => $item['main_dealer']['id'], 'id' => $item['id']]) }}">Detail</a>
                                         <li><hr class="dropdown-divider"></li>
-                                        <a class="dropdown-item text-danger">Delete</a>
+                                        <a class="dropdown-item text-warning">Solve</a>
                                     </li>
                                 </ul>
                             </td>

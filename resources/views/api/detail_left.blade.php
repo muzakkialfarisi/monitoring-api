@@ -2,7 +2,7 @@
     <div class="card-header border-bottom">
         <div class="d-flex align-items-center">
             <div class="flex-grow-1 ps-3">
-                <h5 class="card-title"><strong>RDetail</strong></h5>
+                <h5 class="card-title"><strong>Detail</strong></h5>
             </div>
         </div>
     </div>

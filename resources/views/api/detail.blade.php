@@ -6,6 +6,9 @@
     </div>
     <div class="col">
         @include('api.detail_right')
+        <div class="d-grid gap-2">
+            <a asp-action="Index" class="btn btn-dark" href="{{ route('api.alert') }}">Back</a>
+        </div>  
     </div>
 </div>
 
