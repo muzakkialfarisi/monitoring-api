@@ -4,7 +4,7 @@
     <div class="card-header border-bottom">
         <div class="d-flex align-items-center">
             <div class="flex-grow-1 ps-3">
-                <h5 class="card-title"><strong>Log {{ $data->name }}</strong></h5>
+                <h5 class="card-title"><strong>Log {{ $data->name ?? '' }}</strong></h5>
             </div>
             <div class="row">
                 <div class="col">
@@ -47,7 +47,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($data->log->rows as $item)
+                    @foreach($data['log']->rows as $item)
                         <tr>
                             <td class="text-center">
                                 <button type="button" class="btn btn-sm btn-outline-tertiary" data-bs-toggle="dropdown"><i class="fas fa-fw fa-ellipsis-h"></i></button>

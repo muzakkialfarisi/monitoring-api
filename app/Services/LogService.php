@@ -48,7 +48,7 @@ class LogService
         }
 
         if($api->is_check_status_code == true){
-            if($api->response_time_actual ?? 0 + $api->response_time_tolerance ?? 0 < $param["response_time_factual"]){
+            if(($api->response_time_actual + $api->response_time_tolerance) < $this->response_time){
                 $param["response_time_validation"] = false;
                 if($api->response_time_validation == true){
                     $api_is_update = true;
@@ -87,9 +87,18 @@ class LogService
             ->save();
 
         if($api_is_update == true){
-            $api->status_code_validation = $param["status_code_validation"];
-            $api->response_body_validation = $param["response_body_validation"];
-            $api->response_time_validation = $param["response_time_validation"];
+            if($param["status_code_validation"] == false){
+                $api->status_code_validation = $param["status_code_validation"];
+                $api->status_code_id = $log->id;
+            }
+            if($param["response_body_validation"] == false){
+                $api->response_body_validation = $param["response_body_validation"];
+                $api->response_time_id = $log->id;
+            }
+            if($param["response_time_validation"] == false){
+                $api->response_time_validation = $param["response_time_validation"];
+                $api->response_body_id = $log->id;
+            }
             $api->save();
 
             if($api->is_push_email == true){

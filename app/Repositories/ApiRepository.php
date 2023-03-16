@@ -170,6 +170,22 @@ class ApiRepository
         ];
     }
 
+    public function getListIsError()
+    {
+        $data = (new ApiModel())->where('is_active', 1)
+            ->whereNull('deleted_at')
+            ->where('status_code_validation', 0)
+            ->orWhere('response_time_validation', 0)
+            ->orWhere('response_body_validation', 0)
+            ->orderBy('priority')
+            ->with(['main_dealer']);
+
+        return (object) [
+            "total" => $data->count(),
+            "rows" =>  $data->get()
+        ];
+    }
+
     public function create($param)
     {
         $data = (new ApiModel())->create($param);    

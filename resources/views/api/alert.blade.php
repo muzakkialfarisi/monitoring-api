@@ -4,12 +4,7 @@
     <div class="card-header border-bottom">
         <div class="d-flex align-items-center">
             <div class="flex-grow-1 ps-3">
-                <h5 class="card-title"><strong>API {{ $data->name ?? "To Be Announced" }}</strong></h5>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <a class="btn btn-primary btn-pill" href="{{ route('api.upsert', ['main_dealer_id' => $data->id]) }}">Add New API</a>
-                </div>
+                <h5 class="card-title"><strong>API</strong></h5>
             </div>
         </div>
     </div>
@@ -22,78 +17,62 @@
                             action
                         </th>
                         <th>
-                            back end
-                        </th>
-                        <th>
-                            feature
+                            main dealer
                         </th>
                         <th>
                             url
                         </th>
                         <th>
-                            check status code
+                            status code
                         </th>
                         <th>
-                            check response time
+                            response time
                         </th>
                         <th>
-                            check response body
-                        </th>
-                        <th>
-                            push email
-                        </th>
-                        <th>
-                            status
+                            response body
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($data->api->rows as $item)
+                    @foreach($data['api']->rows as $item)
                         <tr>
                             <td class="text-center">
                                 <button type="button" class="btn btn-sm btn-outline-tertiary" data-bs-toggle="dropdown"><i class="fas fa-fw fa-ellipsis-h"></i></button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item text-warning" href="{{ route('api.upsert', ['main_dealer_id' => $data->id, 'id' => $item->id]) }}">Edit</a>
+                                        <a class="dropdown-item text-warning" href="{{ route('api.detail', ['main_dealer_id' => $item['main_dealer']['id'], 'id' => $item['id']]) }}">Detail</a>
                                         <li><hr class="dropdown-divider"></li>
                                         <a class="dropdown-item text-danger">Delete</a>
                                     </li>
                                 </ul>
                             </td>
                             <td>
-                                {{$item['back_end']['name']}}
-                            </td>
-                            <td>
+                                {{$item['main_dealer']['name']}} | 
+                                {{$item['back_end']['name']}} | 
                                 {{$item['feature']['name']}}
                             </td>
                             <td>
-                                {{$item['back_end']['base_url'].$item['path']}}
+                                {{$item['back_end']['base_url']}}
                             </td>
                             <td class="text-center">
-                                @if ($item['is_check_status_code'] == true) 
+                                @if ($item['status_code_validation'] == true) 
                                     <i class='fas fa-check-circle'></i>
+                                @else 
+                                    <i class='fas fa-times-circle text-danger'></i>
                                 @endif
                             </td>
                             <td class="text-center">
-                                @if ($item['is_check_response_time'] == true) 
+                                @if ($item['response_time_validation'] == true) 
                                     <i class='fas fa-check-circle'></i>
+                                @else 
+                                    <i class='fas fa-times-circle text-danger'></i>
                                 @endif
                             </td>
                             <td class="text-center">
-                                @if ($item['is_check_response_body'] == true) 
+                                @if ($item['response_body_validation'] == true) 
                                     <i class='fas fa-check-circle'></i>
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                @if ($item['is_push_email'] == true) 
-                                    <i class='fas fa-check-circle'></i>
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                @if($item['is_active'] == true)
-                                    <span class="badge bg-success"> active </span>
-                                @else
-                                    <span class="badge bg-warning"> nonactive </span>
+                                @else 
+                                    <i class='fas fa-times-circle text-danger'></i>
                                 @endif
                             </td>
                         </tr>

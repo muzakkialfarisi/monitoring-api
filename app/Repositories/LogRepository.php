@@ -209,23 +209,23 @@ class LogRepository
         ];
     }
 
-    public function getAverageResponseTime()
-    {
-        $data = (new LogModel())->whereNull('deleted_at')
-        ->whereDate('created_at', Carbon::today())
-        ->where('is_active', true)
-        ->where('response_time_validation', true);
+    // public function getAverageResponseTime()
+    // {
+    //     $data = (new LogModel())->whereNull('deleted_at')
+    //     ->whereDate('created_at', Carbon::today())
+    //     ->where('is_active', true)
+    //     ->where('response_time_validation', true);
 
-        if(isset($this->main_dealer_id)){
-            $data = $data->where('main_dealer_id', $this->main_dealer_id);
-        }
+    //     if(isset($this->main_dealer_id)){
+    //         $data = $data->where('main_dealer_id', $this->main_dealer_id);
+    //     }
 
-        if(isset($this->api_id)){
-            $data = $data->where('api_id', $this->api_id);
-        }
+    //     if(isset($this->api_id)){
+    //         $data = $data->where('api_id', $this->api_id);
+    //     }
 
-        $data = $data->avg('response_time');
+    //     $data = $data->avg('response_time');
 
-        return round($data, 2);
-    }
+    //     return round($data, 2);
+    // }
 }

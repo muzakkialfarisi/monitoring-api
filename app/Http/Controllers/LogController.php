@@ -12,7 +12,7 @@ use App\Transformers\LogTransformer;
 
 class LogController extends Controller
 {
-    public function index(Int $main_dealer_id)
+    public function index(Int $main_dealer_id = null)
     {
         $data = (new MainDealerRepository())
                 ->set_id($main_dealer_id ?? 0)

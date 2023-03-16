@@ -11,7 +11,7 @@
 </li>
 <li class="sidebar-item">
     <a class="sidebar-link" href="{{ route('maindealer.index') }}">
-        <i class="align-middle me-2 fas fa-fw fa-fire"></i> <span class="align-middle">Main Dealer API</span>
+        <i class="align-middle me-2 fas fa-fw fa-tachometer-alt"></i> <span class="align-middle">Main Dealer</span>
     </a>
 </li>
 <li class="sidebar-item">
@@ -23,9 +23,17 @@
     monitoring
 </li>
 <li class="sidebar-item">
+    <a class="sidebar-link" href="{{ route('api.alert') }}">
+        <i class="align-middle me-2 fas fa-fw fa-fire"></i> <span class="align-middle">API</span>
+    </a>
+</li>
+<li class="sidebar-item">
     <a data-bs-target=#log data-bs-toggle="collapse" class="sidebar-link collapsed">
         <i class="align-middle me-2 fab fa-fw fa-blogger-b"></i> <span class="align-middle">Log</span>
     </a>
+    <ul id="log" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+        <li class="sidebar-item"><a class="sidebar-link" href="{{ route('log.index') }}">All</a></li>
+    </ul>
     <ul id="log" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
         <li class="sidebar-item"><a class="sidebar-link" href="{{ route('log.index', 1) }}">Wanda</a></li>
     </ul>

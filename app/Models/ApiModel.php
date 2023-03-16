@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\MainDealerModel;
 use App\Models\BackEndModel;;
 use App\Models\FeatureModel;
+use App\Models\LogModel;
 
 class ApiModel extends Model
 {
@@ -43,5 +44,17 @@ class ApiModel extends Model
 
     public function main_dealer(){
         return $this->hasOne(MainDealerModel::class, 'id','main_dealer_id');
+    }
+
+    public function status_code_log(){
+        return $this->hasOne(LogModel::class, 'id','status_code_id');
+    }
+
+    public function response_time_log(){
+        return $this->hasOne(LogModel::class, 'id','response_time_id');
+    }
+
+    public function response_body_log(){
+        return $this->hasOne(LogModel::class, 'id','response_body_id');
     }
 }
