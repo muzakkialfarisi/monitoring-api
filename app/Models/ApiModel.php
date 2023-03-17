@@ -29,6 +29,21 @@ class ApiModel extends Model
         'status_code_validation',
         'response_time_validation',
         'response_body_validation',
+        'headers',
+        'body',
+        'params',
+        'status_code_actual',
+        'response_time_actual',
+        'response_body_actual',
+        'response_time_tolerance',
+        'is_push_email',
+        'is_check_status_code',
+        'is_check_response_body',
+        'is_check_response_time',
+        'priority',
+        'status_code_id',
+        'response_time_id',
+        'response_body_id',
     ];
 
     protected $hidden = ['deleted_at'];

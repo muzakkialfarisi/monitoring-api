@@ -47,7 +47,7 @@ class LogService
             }
         }
 
-        if($api->is_check_status_code == true){
+        if($api->is_check_response_time == true){
             if(($api->response_time_actual + $api->response_time_tolerance) < $this->response_time){
                 $param["response_time_validation"] = false;
                 if($api->response_time_validation == true){
@@ -56,7 +56,7 @@ class LogService
             }
         }
 
-        if($api->is_check_status_code == true){
+        if($api->is_check_response_body == true){
             if($api->response_body_actual <> $param["response_body_factual"]){
                 $param["response_body_validation"] = false;
                 if($api->response_body_validation == true)
@@ -93,7 +93,7 @@ class LogService
             }
             if($param["response_body_validation"] == false){
                 $api->response_body_validation = $param["response_body_validation"];
-                $api->response_time_id = $log->id;
+                $api->response_body_id = $log->id;
             }
             if($param["response_time_validation"] == false){
                 $api->response_time_validation = $param["response_time_validation"];
@@ -103,7 +103,7 @@ class LogService
 
             if($api->is_push_email == true){
                 \Mail::to('mzkalfarisi@gmail.com')
-                    ->cc(['muzakki.ahmadalfarisi@hso.astra.co.id', 'anggaagustira@gmail.com'])
+                    ->cc(['muzakki.ahmadalfarisi@hso.astra.co.id'])
                     ->send(new SendMail([
                         'title' => 'Alert for your API',
                         'data' => $log

@@ -27,7 +27,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     Route::get('/md/{main_dealer_id}', 'ApiController@index')->name('api.index');
     Route::get('/md/{main_dealer_id}/upsert/{id?}', 'ApiController@upsert')->name('api.upsert');
-    Route::post('/md/{main_dealer_id}/upsert/{id?}', 'ApiController@upsert_process')->name('api.upsert.process');
+    Route::post('/md/{main_dealer_id}/upsert_process/{id?}', 'ApiController@upsert_process')->name('api.upsert.process');
 });
 
 $router->group(['prefix' => 'log'], function () use ($router) {

@@ -22,9 +22,6 @@
                             action
                         </th>
                         <th>
-                            back end
-                        </th>
-                        <th>
                             feature
                         </th>
                         <th>
@@ -60,14 +57,13 @@
                                     </li>
                                 </ul>
                             </td>
-                            <td>
-                                {{$item['back_end']['name']}}
-                            </td>
-                            <td>
+                            <td class="text-nowrap">
+                                {{$item['back_end']['name']}} | 
                                 {{$item['feature']['name']}}
                             </td>
                             <td>
-                                {{$item['back_end']['base_url'].$item['path']}}
+                                {{$item['back_end']['base_url']}}<br>
+                                {{$item['path']}}
                             </td>
                             <td class="text-center">
                                 @if ($item['is_check_status_code'] == true) 

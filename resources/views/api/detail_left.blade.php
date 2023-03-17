@@ -10,18 +10,10 @@
         <table class="table">
             <tr>
                 <td>
-                    Created At
-                </td>
-                <td>
-                    {{$data['api']['response_body_log']['created_at']}}
-                </td>
-            </tr>
-            <tr>
-                <td>
                     Main Dealer
                 </td>
                 <td>
-                    {{$data['api']['main_dealer']['name']}}
+                    {{$data['api']['main_dealer']['name'] ?? ""}}
                 </td>
             </tr>
             <tr>
@@ -29,7 +21,7 @@
                     Feature
                 </td>
                 <td>
-                    {{$data['api']['feature']['name']}}
+                    {{$data['api']['feature']['name'] ?? ""}}
                 </td>
             </tr>
             <tr>
@@ -37,7 +29,7 @@
                     URL
                 </td>
                 <td>
-                    {{$data['api']['response_body_log']['url']}}
+                    {{$data['api']['back_end']['base_url'] . $data['api']['path'] ?? ""}}
                 </td>
             </tr>
             <tr>
@@ -45,15 +37,15 @@
                     Request Headers
                 </td>
                 <td>
-                    {{$data['api']['response_body_log']['request_header']}}
+                    {{$data['api']['headers'] ?? ""}}
                 </td>
             </tr>
             <tr>
                 <td>
-                    Request Payload
+                    Request Body
                 </td>
                 <td>
-                    {{$data['api']['response_body_log']['request_payload']}}
+                    {{$data['api']['body'] ?? ""}}
                 </td>
             </tr>
         </table>

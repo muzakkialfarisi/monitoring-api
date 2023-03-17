@@ -14,6 +14,7 @@
                 </div>
                 <div class="card-body">
                     <input name="id" value="{{ $data['api']->id ?? '' }}" hidden />
+                    <input name="main_dealer_id" value="{{ $data->id ?? '' }}" hidden />
 
                     <div class="form-group required mb-3">
                         <label class="control-label">Feature</label>
@@ -64,7 +65,7 @@
                     </div>
                     <div class="form-group required mb-3">
                         <label class="control-label">Body</label>                
-                        <textarea class="form-control" name="body" rows="4" required>{{ $data->api->body ?? "" }}</textarea>
+                        <textarea class="form-control" name="body" rows="4">{{ $data->api->body ?? "" }}</textarea>
                     </div>
                 </div>
             </div>
@@ -81,19 +82,19 @@
                 <div class="card-body">
                     <div class="form-group required mb-3">
                         <label class="control-label">Status Code Actual</label>
-                        <input name="status_code_actual" class="form-control" required value="{{ $data->api->status_code_actual ?? "" }}"/>
+                        <input name="status_code_actual" class="form-control" value="{{ $data->api->status_code_actual ?? "" }}"/>
                     </div>
                     <div class="form-group required mb-3">
                         <label class="control-label">Response Time Actual</label>
-                        <input name="response_time_actual" class="form-control" required value="{{ $data->api->response_time_actual ?? "" }}"/>
+                        <input name="response_time_actual" class="form-control" value="{{ $data->api->response_time_actual ?? "" }}"/>
                     </div>
                     <div class="form-group required mb-3">
                         <label class="control-label">Response Time Tolerance</label>
-                        <input name="response_time_tolerance" class="form-control" required value="{{ $data->api->response_time_tolerance ?? "" }}"/>
+                        <input name="response_time_tolerance" class="form-control" value="{{ $data->api->response_time_tolerance ?? "" }}"/>
                     </div>
                     <div class="form-group required mb-3">
                         <label class="control-label">Response Body Actual</label>                
-                        <textarea class="form-control" name="response_time_actual" rows="4" required>{{ $data->api->response_time_actual ?? "" }}</textarea>
+                        <textarea class="form-control" name="response_body_actual" rows="4">{{ $data->api->response_time_actual ?? "" }}</textarea>
                     </div>
                     <div class="form-group required mb-3">
                         <label class="control-label">Priority</label>
@@ -106,23 +107,23 @@
                         </select>
                     </div>
                     <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" name="is_check_status_code" {{ isset($data->api->is_check_status_code) ? 'checked' : '' }}>
+                        <input class="form-check-input" type="checkbox" name="is_check_status_code" {{ isset($data->api->is_check_status_code) ? 'checked' : '' }} value="{{ isset($data->api->is_check_status_code) ? '1' : '0' }}">
                         <label class="form-check-label">Check Status Code</label>
                     </div>
                     <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" name="is_check_response_time" {{ isset($data->api->is_check_response_time) ? 'checked' : '' }}>
+                        <input class="form-check-input" type="checkbox" name="is_check_response_time" {{ isset($data->api->is_check_response_time) ? 'checked' : '' }} value="{{ isset($data->api->is_check_response_time) ? '1' : '0' }}">
                         <label class="form-check-label">Check Response Time</label>
                     </div>
                     <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" name="is_check_response_body" {{ isset($data->api->is_check_response_body) ? 'checked' : '' }}>
+                        <input class="form-check-input" type="checkbox" name="is_check_response_body" {{ isset($data->api->is_check_response_body) ? 'checked' : '' }} value="{{ isset($data->api->is_check_response_body) ? '1' : '0' }}">
                         <label class="form-check-label">Check Response Body</label>
                     </div>
                     <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" name="is_push_email" {{ isset($data->api->is_push_email) ? 'checked' : '' }}>
+                        <input class="form-check-input" type="checkbox" name="is_push_email" {{ isset($data->api->is_push_email) ? 'checked' : '' }} value="{{ isset($data->api->is_push_email) ? $data->api->is_push_email : 0 }}">
                         <label class="form-check-label">Push Email</label>
                     </div>
                     <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" name="is_active" {{ isset($data->api->is_active) ? 'checked' : '' }}>
+                        <input class="form-check-input" type="checkbox" name="is_active" {{ isset($data->api->is_active) ? 'checked' : '' }} value="{{ isset($data->api->is_active) ? $data->api->is_active : 0 }}">
                         <label class="form-check-label">Active</label>
                     </div>
                 </div>
@@ -159,9 +160,6 @@
             },
             change: function() {
                 this.value = this.value.replace(/\s/g, "");
-
-                headers = this.value;
-                $("textarea[name='headers']").html(headers.replace(/Bearer/g, "Bearer "))
             }
         });
 
@@ -176,6 +174,42 @@
                 headers = this.value;
                 $("textarea[name='headers']").html(headers.replace(/Bearer/g, "Bearer "))
             }
+        });
+
+        $("input[name='is_push_email']").click(function() {
+            val = 0;
+            if($(this).is(':checked')){
+                val = 1;
+            }
+            $("input[name='is_push_email']").val(val);
+        });
+        $("input[name='is_check_status_code']").click(function() {
+            val = 0;
+            if($(this).is(':checked')){
+                val = 1;
+            }
+            $("input[name='is_check_status_code']").val(val);
+        });
+        $("input[name='is_check_response_body']").click(function() {
+            val = 0;
+            if($(this).is(':checked')){
+                val = 1;
+            }
+            $("input[name='is_check_response_body']").val(val);
+        });
+        $("input[name='is_check_response_time']").click(function() {
+            val = 0;
+            if($(this).is(':checked')){
+                val = 1;
+            }
+            $("input[name='is_check_response_time']").val(val);
+        });
+        $("input[name='is_active']").click(function() {
+            val = 0;
+            if($(this).is(':checked')){
+                val = 1;
+            }
+            $("input[name='is_active']").val(val);
         });
     </script>
 @endpush
