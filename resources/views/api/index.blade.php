@@ -45,7 +45,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($data->api->rows as $item)
+                    @foreach($data->api as $item)
                         <tr>
                             <td class="text-center">
                                 <button type="button" class="btn btn-sm btn-outline-tertiary" data-bs-toggle="dropdown"><i class="fas fa-fw fa-ellipsis-h"></i></button>
@@ -53,7 +53,12 @@
                                     <li>
                                         <a class="dropdown-item text-warning" href="{{ route('api.upsert', ['main_dealer_id' => $data->id, 'id' => $item->id]) }}">Edit</a>
                                         <li><hr class="dropdown-divider"></li>
-                                        <a class="dropdown-item text-danger">Delete</a>
+                                        <form method="POST" action="{{ route('api.delete_process', ['main_dealer_id' => $data->id, 'id' => $item->id]) }}">
+                                            @csrf
+                                            <input name="main_dealer_id" value="{{ $data->id }}" hidden>
+                                            <input name="id" value="{{ $item->id }}" hidden>
+                                            <button class="dropdown-item text-danger" type="submit">Delete</button>
+                                        </form>
                                     </li>
                                 </ul>
                             </td>

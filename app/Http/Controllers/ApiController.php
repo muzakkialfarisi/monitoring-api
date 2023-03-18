@@ -12,15 +12,12 @@ use App\Validators\ApiValidator;
 
 class ApiController extends Controller
 {
-    public function index(Int $main_dealer_id)
+    public function index($main_dealer_id = null)
     {
         $data = (new MainDealerRepository())
+            ->set_relationship(['api'])
             ->set_id($main_dealer_id ?? 0)
             ->getFirst();
-
-        $data['api'] = (new ApiRepository())
-            ->set_main_dealer_id($main_dealer_id ?? 0)
-            ->getList();
 
         return view('api/index')->with(['data' => $data]);
     }
@@ -68,6 +65,22 @@ class ApiController extends Controller
         }
                 
         return redirect()->route('api.upsert', ['main_dealer_id' => $main_dealer_id, 'id' => $params['id']]);
+    }
+
+    public function delete_process(Request $request)
+    {
+        $params = json_decode(json_encode($request->all()), true);
+
+        $data = (new ApiRepository())
+                ->set_main_dealer_id($params['main_dealer_id'] ?? 0)
+                ->set_id($params['id'] ?? 0)
+                ->delete();
+        
+        if(!$data){
+            return redirect()->back()->with(['error' => 'Delete faied!']);
+        }
+
+        return view('api.index', ['main_dealer_id' => $params['main_dealer_id']])->with(['success' => 'Deleted successfully!']);
     }
     
     public function alert(Int $main_dealer_id = null)

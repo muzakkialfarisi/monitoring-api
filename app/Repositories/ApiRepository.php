@@ -187,17 +187,9 @@ class ApiRepository
         ];
     }
 
-    public function set_data($param)
+    public function set_data($param): self
     {
-        // $temp = ;
-        // $this->$temp = $temp;
-
-        // return $this;
-    }
-
-    public function create($param)
-    {
-        $data = (new ApiModel())->create([
+        $data = [
             'back_end_id' => $param['back_end_id'] ?? null,
             'main_dealer_id' => $param['main_dealer_id'] ?? null,
             'feature_id' => $param['feature_id'] ?? null,
@@ -226,7 +218,16 @@ class ApiRepository
             'status_code_id' => 0,
             'response_time_id' => 0,
             'response_body_id'=> 0,
-        ]);    
+        ];
+
+        $this->data = $data;
+
+        return $this;
+    }
+
+    public function create($param)
+    {
+        $data = (new ApiModel())->create($this->data);    
         
         if(!$data){
             return false;
@@ -263,36 +264,45 @@ class ApiRepository
             $data = $data->where('is_active', $this->is_active);
         }
 
-        $data = $data
-            ->update([
-                'back_end_id' => $param['back_end_id'] ?? null,
-                'feature_id' => $param['feature_id'] ?? null,
-                'path' => $param['path'] ?? null,
-                'is_active' => $param['is_active'] ?? null,
-                'method' => $param['method'] ?? null,
-                'main_dealer_id' => $param['main_dealer_id'] ?? null,
-                'headers' => $param['headers'] ?? null,
-                'params' => $param['params'] ?? null,
-                'body' => $param['body'] ?? null,
-                'status_code_validation' => $param['status_code_validation'] ?? 1,
-                'response_time_validation' => $param['response_time_validation'] ?? 1,
-                'response_body_validation' => $param['response_body_validation'] ?? 1,
-                'headers' => $param['headers'] ?? null,
-                'body' => $param['body'] ?? null,
-                'params' => $param['params'] ?? null,
-                'status_code_actual' => $param['status_code_actual'] ?? null,
-                'response_time_actual' => $param['response_time_actual'] ?? null,
-                'response_body_actual' => $param['response_body_actual'] ?? null,
-                'response_time_tolerance' => $param['response_time_tolerance'] ?? null,
-                'is_push_email' => $param['is_push_email'] ?? null,
-                'is_check_status_code' => $param['is_check_status_code'] ?? null,
-                'is_check_response_body' => $param['is_check_response_body'] ?? null,
-                'is_check_response_time' => $param['is_check_response_time'] ?? null,
-                'priority' => $param['priority'] ?? 0,
-                'status_code_id' => 0,
-                'response_time_id' => 0,
-                'response_body_id'=> 0,
-            ]);
+        $data = $data->update($this->data);
+
+        if(!$data){
+            return false;
+        }
+
+        return $data;
+    }
+
+    public function delete()
+    {
+        $data = (new ApiModel())->whereNull("deleted_at");
+
+        if(isset($this->id)){
+            $data = $data->where('id', $this->id);
+        }
+
+        if(isset($this->main_dealer_id)){
+            $data = $data->where('main_dealer_id', $this->main_dealer_id);
+        }
+
+        if(isset($this->back_end_id)){
+            $data = $data->where('back_end_id', $this->back_end_id);
+        }
+
+        if(isset($this->feature_id)){
+            $data = $data->where('feature_id', $this->feature_id);
+        }
+
+        if(isset($this->path)){
+            $data = $data->where('path', $this->path);
+        }
+
+        if(isset($this->is_active)){
+            $data = $data->where('is_active', $this->is_active);
+        }
+        dd($data->get());
+        $data = $data->delete();
+        
         if(!$data){
             return false;
         }

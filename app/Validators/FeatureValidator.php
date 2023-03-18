@@ -7,15 +7,16 @@ use Illuminate\Support\Facades\Validator;
 
 class FeatureValidator
 {
-  public function rules($id = null)
+  public function rules($params)
   {
-    if(isset($id)){
-        $validate['id'] = 'required|numeric|exists:feature,id';
-    }
-    
-    $validate['name'] = 'required';
+    $validate['name'] = 'required|unique:feature,name';
     $validate['is_active'] = 'required|numeric|in:0,1';
 
+    if(isset($params['id'])){
+        $validate['id'] = 'required|numeric|exists:feature,id';
+        $validate['name'] = 'required|unique:feature,name,'.$params['name'].',name';
+    }
+    
     return $validate;
   }
 
@@ -32,6 +33,6 @@ class FeatureValidator
 
   public function validate($params)
   {
-    return Validator::make($params, $this->rules($params['id'] ?? null), $this->message());
+    return Validator::make($params, $this->rules($params), $this->message());
   }
 }
