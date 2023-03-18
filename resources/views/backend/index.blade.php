@@ -4,11 +4,11 @@
     <div class="card-header border-bottom">
         <div class="d-flex align-items-center">
             <div class="flex-grow-1 ps-3">
-                <h5 class="card-title"><strong>Back End</strong></h5>
+                <h5 class="card-title"><strong>Application {{  $data->name ?? '' }}</strong></h5>
             </div>
             <div>
-                <button class="btn btn-primary btn-pill btn-upsert" data-bs-toggle="modal" data-bs-target="#modal_upsert">Add New Feature</button>
-                @include('feature.upsert')
+                <button class="btn btn-primary btn-pill btn-upsert" data-bs-toggle="modal" data-bs-target="#modal_upsert">Add New Application</button>
+                @include('backend.upsert')
             </div>
         </div>
     </div>
@@ -27,12 +27,15 @@
                             name
                         </th>
                         <th>
+                            base url
+                        </th>
+                        <th>
                             status
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($data->rows as $item)
+                    @foreach($data->backend as $item)
                         <tr>
                             <td class="text-center">
                                 <button type="button" class="btn btn-sm btn-outline-tertiary" data-bs-toggle="dropdown"><i class="fas fa-fw fa-ellipsis-h"></i></button>
@@ -40,6 +43,7 @@
                                     <li>
                                         <a class="dropdown-item text-warning btn-upsert" data-id="{{ $item['id'] }}"
                                         data-name="{{ $item['name'] }}"
+                                        data-base_url="{{ $item['base_url'] }}"
                                         data-is_active="{{ $item['is_active'] }}"
                                         data-bs-toggle="modal" data-bs-target="#modal_upsert">Edit</a>
                                     </li>
@@ -50,6 +54,9 @@
                             </td>
                             <td>
                                 {{$item['name']}}
+                            </td>
+                            <td>
+                                {{$item['base_url']}}
                             </td>
                             <td class="text-center">
                                 @if($item['is_active'] == true)
@@ -77,11 +84,13 @@
             if(typeof $(this).data("id") === 'undefined'){
                 $("input[name='id']").val("");
                 $("input[name='name']").val("");
+                $("input[name='base_url']").val("");
                 $("select[name='is_active']").val(1).change();
             }
             else{
                 $("input[name='id']").val($(this).data("id"));
                 $("input[name='name']").val($(this).data("name"));
+                $("input[name='base_url']").val($(this).data("base_url"));
                 $("select[name='is_active']").val($(this).data("is_active")).change();
             }
         });

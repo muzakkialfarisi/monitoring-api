@@ -5,17 +5,15 @@ namespace App\Validators;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
-class MainDealerValidator
+class BackEndValidator
 {
-  public function rules($id = null)
+  public function rules($params)
   {
-    if(isset($id)){
-        $validate['id'] = 'required|numeric|exists:feature,id';
-    }
-    
+    $validate['main_dealer_id'] = 'required|exists:main_dealer,id';
     $validate['name'] = 'required';
+    $validate['base_url'] = 'required|unique:back_end,base_url,'.$params['base_url'].',base_url';
     $validate['is_active'] = 'required|numeric|in:0,1';
-  
+
     return $validate;
   }
 
@@ -32,6 +30,6 @@ class MainDealerValidator
 
   public function validate($params)
   {
-    return Validator::make($params, $this->rules($params['id'] ?? null), $this->message());
+    return Validator::make($params, $this->rules($params), $this->message());
   }
 }

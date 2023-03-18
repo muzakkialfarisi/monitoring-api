@@ -11,7 +11,10 @@ class FeatureModel extends Model
 
     protected $table = 'feature';
     protected $dateFormat = "Y-m-d H:i:s";
-    protected $fillable = [];
+    protected $fillable = [
+        'name',
+        'is_active'
+    ];
 
     protected $hidden = ['deleted_at'];
 }

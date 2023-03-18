@@ -13,7 +13,12 @@ class BackEndModel extends Model
 
     protected $table = 'back_end';
     protected $dateFormat = "Y-m-d H:i:s";
-    protected $fillable = [];
+    protected $fillable = [
+        'main_dealer_id',
+        'base_url',
+        'name',
+        'is_active'
+    ];
 
     protected $hidden = ['deleted_at'];
 

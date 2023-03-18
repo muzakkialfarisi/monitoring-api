@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use App\Libraries\Factory;
 use App\Repositories\MainDealerRepository;
 use App\Validators\MainDealerValidator;
 
@@ -27,7 +26,7 @@ class MainDealerController extends Controller
         $validator = (new MainDealerValidator())->validate($params);
 
         if ($validator->fails()) {
-            return $validator->errors()->all();
+            return redirect()->route('maindealer.index')->with(['error' => $validator->errors()->first()]);
         }
 
         if(isset($params['id'])){
@@ -43,9 +42,9 @@ class MainDealerController extends Controller
         }
 
         if(!$data){
-            return redirect()->route('maindealer.index');
+            return redirect()->route('maindealer.index')->with(['error' => 'Data failed to save!']);
         }
 
-        return redirect()->route('maindealer.index');
+        return redirect()->route('maindealer.index')->with(['success' => 'Data saved successfully!']);
     }
 }

@@ -15,11 +15,17 @@ $router->group(['prefix' => 'dashboard'], function () use ($router) {
 
 $router->group(['prefix' => 'maindealer'], function () use ($router) {
     Route::get('/', 'MainDealerController@index')->name('maindealer.index');
-    Route::post('/upsert/{id?}', 'MainDealerController@upsert_process')->name('maindealer.upsert_process');
+    Route::post('/upsert', 'MainDealerController@upsert_process')->name('maindealer.upsert_process');
 });
 
 $router->group(['prefix' => 'feature'], function () use ($router) {
     Route::get('/', 'FeatureController@index')->name('feature.index');
+    Route::post('/upsert', 'FeatureController@upsert_process')->name('feature.upsert_process');
+});
+
+$router->group(['prefix' => 'backend'], function () use ($router) {
+    Route::get('/md/{main_dealer_id}', 'BackEndController@index')->name('backend.index');
+    Route::post('/md/{main_dealer_id}/upsert', 'BackEndController@upsert_process')->name('backend.upsert_process');
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {

@@ -44,7 +44,7 @@
                                 <button type="button" class="btn btn-sm btn-outline-tertiary" data-bs-toggle="dropdown"><i class="fas fa-fw fa-ellipsis-h"></i></button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item">App</a>
+                                        <a class="dropdown-item" href="{{ route('backend.index', ['main_dealer_id' => $item['id']]) }}">Application</a>
                                         <a class="dropdown-item" href="{{ route('api.index', $item['id']) }}">API</a>
                                         <li><hr class="dropdown-divider"></li>
                                         <a class="dropdown-item text-warning btn-upsert" data-id="{{ $item['id'] }}"

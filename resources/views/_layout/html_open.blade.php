@@ -8,8 +8,9 @@
         <meta name="author" content="Bootlab">
 
         <link rel="stylesheet" type="text/css" href="{{ asset('lib/css/dark.css') }}" >
+        <link rel="stylesheet"  type="text/css" href="{{ asset('lib/sweetalert2/sweetalert2.min.css') }}">
 
-        <title>Laravel</title>
+        <title>M-API</title>
     </head>
     <body style="font-size: 14px">
         

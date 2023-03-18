@@ -5,7 +5,7 @@ namespace App\Validators;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
-class MainDealerValidator
+class FeatureValidator
 {
   public function rules($id = null)
   {
@@ -15,7 +15,7 @@ class MainDealerValidator
     
     $validate['name'] = 'required';
     $validate['is_active'] = 'required|numeric|in:0,1';
-  
+
     return $validate;
   }
 

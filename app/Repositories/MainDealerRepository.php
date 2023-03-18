@@ -126,7 +126,7 @@ class MainDealerRepository
 
         $data = $data->update($this->data);
 
-        if($data){
+        if(!$data){
             return false;
         }
 
@@ -137,7 +137,7 @@ class MainDealerRepository
     {
         $data = (new MainDealerModel())->create($this->data);
 
-        if($data){
+        if(!$data){
             return false;
         }
 

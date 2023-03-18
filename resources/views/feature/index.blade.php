@@ -38,7 +38,8 @@
                                 <button type="button" class="btn btn-sm btn-outline-tertiary" data-bs-toggle="dropdown"><i class="fas fa-fw fa-ellipsis-h"></i></button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item text-warning btn-upsert" data-id="{{ $item['id'] }}"
+                                        <a class="dropdown-item text-warning btn-upsert" 
+                                        data-id="{{ $item['id'] }}"
                                         data-name="{{ $item['name'] }}"
                                         data-is_active="{{ $item['is_active'] }}"
                                         data-bs-toggle="modal" data-bs-target="#modal_upsert">Edit</a>

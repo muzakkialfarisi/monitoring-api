@@ -120,4 +120,58 @@ class BackEndRepository
             "rows" =>  $data->get()
         ];
     }
+
+    public function set_data(array $params): self
+    {
+        $data = [
+            'main_dealer_id' => $params['main_dealer_id'] ?? 0,
+            'name' => $params['name'] ?? '',
+            'base_url' => $params['base_url'] ?? '',
+            'is_active' => $params['is_active'] ?? 0
+        ];
+
+        $this->data = $data;
+
+        return $this;
+    }
+
+    public function update()
+    {
+        $data = (new BackEndModel())->whereNull("deleted_at");
+
+        if($this->id > 0){
+            $data = $data->where('id', $this->id);
+        }
+
+        if($this->main_dealer_id > 0){
+            $data = $data->where('main_dealer_id', $this->main_dealer_id);
+        }
+
+        if(!empty($this->name)){
+            $data = $data->where('name', $this->name);
+        }
+
+        if(!empty($this->base_url)){
+            $$data = $$data->where('base_url', $this->base_url);
+        }
+
+        $data = $data->update($this->data);
+
+        if(!$data){
+            return false;
+        }
+
+        return $data;
+    }
+
+    public function create()
+    {
+        $data = (new BackEndModel())->create($this->data);
+
+        if(!$data){
+            return false;
+        }
+
+        return $data;
+    }
 }
