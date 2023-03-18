@@ -6,10 +6,9 @@
             <div class="flex-grow-1 ps-3">
                 <h5 class="card-title"><strong>Main Dealer</strong></h5>
             </div>
-            <div class="row">
-                <div class="col">
-                    <a class="btn btn-primary btn-pill">Add New Main Dealer</a>
-                </div>
+            <div>
+                <button class="btn btn-primary btn-pill btn-upsert" data-bs-toggle="modal" data-bs-target="#modal_upsert">Add New Main Dealer</button>
+                @include('maindealer.upsert')
             </div>
         </div>
     </div>
@@ -48,9 +47,10 @@
                                         <a class="dropdown-item">App</a>
                                         <a class="dropdown-item" href="{{ route('api.index', $item['id']) }}">API</a>
                                         <li><hr class="dropdown-divider"></li>
-                                        <a class="dropdown-item text-warning">Edit</a>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <a class="dropdown-item text-danger">Delete</a>
+                                        <a class="dropdown-item text-warning btn-upsert" data-id="{{ $item['id'] }}"
+                                        data-name="{{ $item['name'] }}"
+                                        data-is_active="{{ $item['is_active'] }}"
+                                        data-bs-toggle="modal" data-bs-target="#modal_upsert">Edit</a>
                                     </li>
                                 </ul>
                             </td>
@@ -87,6 +87,20 @@
             $('.table').DataTable({
             });
         });
+
+        $('.btn-upsert').on('click', function () {
+            if(typeof $(this).data("id") === 'undefined'){
+                $("input[name='id']").val("");
+                $("input[name='name']").val("");
+                $("select[name='is_active']").val(1).change();
+            }
+            else{
+                $("input[name='id']").val($(this).data("id"));
+                $("input[name='name']").val($(this).data("name"));
+                $("select[name='is_active']").val($(this).data("is_active")).change();
+            }
+        });
+
     </script>
 @endpush
 

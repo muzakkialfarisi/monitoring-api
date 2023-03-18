@@ -85,7 +85,7 @@ class ApiController extends Controller
             ->set_main_dealer_id($main_dealer_id)
             ->set_relationship(['main_dealer', 'feature', 'back_end', 'status_code_log', 'response_time_log', 'response_body_log'])
             ->getFirst();   
-        // dd($data);
+
         return view('api/detail')->with(['data' => $data]);
     }
 }

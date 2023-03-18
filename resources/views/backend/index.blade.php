@@ -4,7 +4,7 @@
     <div class="card-header border-bottom">
         <div class="d-flex align-items-center">
             <div class="flex-grow-1 ps-3">
-                <h5 class="card-title"><strong>Feature</strong></h5>
+                <h5 class="card-title"><strong>Back End</strong></h5>
             </div>
             <div>
                 <button class="btn btn-primary btn-pill btn-upsert" data-bs-toggle="modal" data-bs-target="#modal_upsert">Add New Feature</button>

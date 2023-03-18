@@ -15,6 +15,7 @@ $router->group(['prefix' => 'dashboard'], function () use ($router) {
 
 $router->group(['prefix' => 'maindealer'], function () use ($router) {
     Route::get('/', 'MainDealerController@index')->name('maindealer.index');
+    Route::post('/upsert/{id?}', 'MainDealerController@upsert_process')->name('maindealer.upsert_process');
 });
 
 $router->group(['prefix' => 'feature'], function () use ($router) {
