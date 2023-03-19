@@ -31,7 +31,6 @@ class BackEndController extends Controller
             return redirect()->route('maindealer.index')->with(['error' => 'Main Dealer not found!']);
         }
         
-
         $validator = (new BackEndValidator())->validate($params);
 
         if ($validator->fails()) {

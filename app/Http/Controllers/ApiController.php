@@ -24,21 +24,22 @@ class ApiController extends Controller
 
     public function upsert($main_dealer_id = null, $id = null)
     {
-        $data = (new MainDealerRepository())
-            ->set_id($main_dealer_id ?? 0)
-            ->getFirst();
-
-        $data['api'] = (new ApiRepository())
+        $data = (new ApiRepository())
+            ->set_relationship(['main_dealer', 'back_end'])
             ->set_id($id ?? 0)
             ->getFirst();
 
-        $data['back_end'] = (new BackEndRepository())
+        $data['back_ends'] = (new BackEndRepository())
+            ->set_is_active(1)
             ->set_main_dealer_id($main_dealer_id ?? 0)
             ->getList();
         
-        $data['feature'] = (new FeatureRepository())
+        $data['features'] = (new FeatureRepository())
+            ->set_is_active(1)
             ->getList();
-                
+        
+        $data['main_dealer']['id'] = $main_dealer_id ?? 0;
+        // dd($data);
         return view('api/upsert')->with(['data' => $data]);
     }
 
@@ -48,23 +49,29 @@ class ApiController extends Controller
 
         $validator = (new ApiValidator())->validate($params);
 
-        if ($validator->failed()) {
+        if ($validator->fails()) {
             return $validator->errors()->all();
         }
 
         if($id == null){
-            $save = (new ApiRepository())->create($params);
+            $save = (new ApiRepository())
+                ->set_data($params)
+                ->create($params);
         }
         else{
             $save = (new ApiRepository())
-            ->set_id($params['id'])
-            ->update($params);
+                ->set_data($params)
+                ->set_id($params['id'])
+                ->update($params);
         }
 
         if(!$save){
+            return redirect()->back()
+            ->with(['error' => 'Data failed to save!']);
         }
                 
-        return redirect()->route('api.upsert', ['main_dealer_id' => $main_dealer_id, 'id' => $params['id']]);
+        return redirect()->route('api.upsert', ['main_dealer_id' => $main_dealer_id, 'id' => $params['id']])
+            ->with(['success' => 'Data saved successfully!']);
     }
 
     public function delete_process(Request $request)

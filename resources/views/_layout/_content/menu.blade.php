@@ -32,12 +32,19 @@
         <i class="align-middle me-2 fab fa-fw fa-blogger-b"></i> <span class="align-middle">Log</span>
     </a>
     <ul id="Log" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-        <li class="sidebar-item {{ Request::is('log/md') || Request::is('log/md/*') ? 'active' : '' }}"><a class="sidebar-link" href="{{ route('log.index') }}">All</a></li>
         <li class="sidebar-item {{ Request::is('log/md') || Request::is('log/md/*') ? 'active' : '' }}"><a class="sidebar-link" href="{{ route('log.index', 1) }}">Wanda</a></li>
         <li class="sidebar-item {{ Request::is('log/md') || Request::is('log/md/*') ? 'active' : '' }}"><a class="sidebar-link" href="{{ route('log.index', 2) }}">MotorkuX</a></li>
         <li class="sidebar-item {{ Request::is('log/md') || Request::is('log/md/*') ? 'active' : '' }}"><a class="sidebar-link" href="{{ route('log.index', 3) }}">Brompit</a></li>
         <li class="sidebar-item {{ Request::is('log/md') || Request::is('log/md/*') ? 'active' : '' }}"><a class="sidebar-link" href="{{ route('log.index', 4) }}">Daya Auto</a></li>
-        <li class="sidebar-item {{ Request::is('log/md') || Request::is('log/md/*') ? 'active' : '' }}"><a class="sidebar-link" href="">TBA</a></li>
+        <li class="sidebar-item {{ Request::is('log/md') || Request::is('log/md/*') ? 'active' : '' }}"><a class="sidebar-link" href="{{ route('log.index', 5) }}">MyCapella</a></li>
+        <li class="sidebar-item {{ Request::is('log/md') || Request::is('log/md/*') ? 'active' : '' }}"><a class="sidebar-link" href="{{ route('log.index', 6) }}">SinsenGo</a></li>
+        <li class="sidebar-item {{ Request::is('log/md') || Request::is('log/md/*') ? 'active' : '' }}"><a class="sidebar-link" href="{{ route('log.index', 7) }}">Uni MINA</a></li>
+        <li class="sidebar-item {{ Request::is('log/md') || Request::is('log/md/*') ? 'active' : '' }}"><a class="sidebar-link" href="{{ route('log.index', 8) }}">HOMi</a></li>
+        <li class="sidebar-item {{ Request::is('log/md') || Request::is('log/md/*') ? 'active' : '' }}"><a class="sidebar-link" href="{{ route('log.index', 9) }}">Keretaku</a></li>
+        <li class="sidebar-item {{ Request::is('log/md') || Request::is('log/md/*') ? 'active' : '' }}"><a class="sidebar-link" href="{{ route('log.index', 10) }}">Motoroyaku</a></li>
+        <li class="sidebar-item {{ Request::is('log/md') || Request::is('log/md/*') ? 'active' : '' }}"><a class="sidebar-link" href="{{ route('log.index', 11) }}">MOSKI</a></li>
+        <li class="sidebar-item {{ Request::is('log/md') || Request::is('log/md/*') ? 'active' : '' }}"><a class="sidebar-link" href="{{ route('log.index', 12) }}">MotoRan</a></li>
+        <li class="sidebar-item {{ Request::is('log/md') || Request::is('log/md/*') ? 'active' : '' }}"><a class="sidebar-link" href="{{ route('log.index', 13) }}">BaHunda</a></li>
     </ul>
 </li>
 <li class="sidebar-item">

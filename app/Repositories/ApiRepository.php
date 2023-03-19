@@ -194,7 +194,7 @@ class ApiRepository
             'main_dealer_id' => $param['main_dealer_id'] ?? null,
             'feature_id' => $param['feature_id'] ?? null,
             'path' => $param['path'] ?? null,
-            'is_active' => $param['is_active'] ?? 1,
+            'is_active' => $param['is_active'] ?? 0,
             'method' => $param['method'] ?? null,
             'main_dealer_id' => $param['main_dealer_id'] ?? null,
             'headers' => $param['headers'] ?? null,
@@ -270,7 +270,7 @@ class ApiRepository
             return false;
         }
 
-        return $data;
+        return true;
     }
 
     public function delete()
@@ -300,13 +300,13 @@ class ApiRepository
         if(isset($this->is_active)){
             $data = $data->where('is_active', $this->is_active);
         }
-        dd($data->get());
+
         $data = $data->delete();
         
         if(!$data){
             return false;
         }
 
-        return $data;
+        return true;
     }
 }
