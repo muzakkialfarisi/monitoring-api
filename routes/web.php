@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+if (env('APP_ENV') === 'production') {
+    \URL::forceScheme('https');
+}
+
 Route::get('/', 'AuthController@login')->name('login');
 
 $router->group(['prefix' => 'auth'], function () use ($router) {
