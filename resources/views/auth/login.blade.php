@@ -13,16 +13,14 @@
                 @csrf
 
                 <div class="form-floating mb-3">
-				    <input class="form-control" asp-for="username" placeholder="username">
+				    <input class="form-control" name="username" placeholder="username">
 				    <label for="username">Username</label>
-                    <span asp-validation-for="username" class="text-danger"></span>
 			    </div>
 
                 <div class="input-group mb-3">
                     <div class="form-floating flex-grow-1">
-                        <input type="password" class="form-control" asp-for="password" placeholder="password">
+                        <input type="password" class="form-control" name="password" placeholder="password">
                         <label for="password">Password</label>
-                        <span asp-validation-for="password" class="text-danger"></span>
                     </div>
                     <span class="input-group-text "><i toggle="#password-field" class="fas fa-fw fa-eye-slash toggle-password"></i></span>
                 </div>

@@ -15,7 +15,15 @@ class AuthController extends Controller
 
     public function login_process(Request $request)
     {
-        return redirect()->route('dashboard.index');
+        $params = json_decode(json_encode($request->all()), true);
+
+        if(isset($params['username']) || isset($params['password'])){
+            if($params['username'] == 'mzkalfarisi' && $params['password'] == 'inovation'){
+                return redirect()->route('dashboard.index');
+            }
+        }
+        
+        return redirect()->route('login')->with(['error' => 'Username or Password incorrect!']);
     }
 
     public function logout()

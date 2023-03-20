@@ -20,7 +20,7 @@
                             borderColor: window.theme.danger,
                             hoverBackgroundColor: window.theme.danger,
                             hoverBorderColor: window.theme.danger,
-                            data: [10, 50, 12, 14, 10, 50, 12, 14, 10, 50, 12, 14],
+                            // data: [10, 50, 12, 14, 10, 50, 12, 14, 10, 50, 12, 14],
                             barPercentage: .75,
                             categoryPercentage: .5
                         }, {
@@ -29,7 +29,7 @@
                             borderColor: window.theme.dark,
                             hoverBackgroundColor: window.theme.dark,
                             hoverBorderColor: window.theme.dark,
-                            data: [10, 50, cek, 14, 10, 50, 12, 14, 10, 50, 12, 14],
+                            // data: [10, 50, cek, 14, 10, 50, 12, 14, 10, 50, 12, 14],
                             barPercentage: .75,
                             categoryPercentage: .5
                         }, {
@@ -38,7 +38,7 @@
                             borderColor: window.theme.warning,
                             hoverBackgroundColor: window.theme.warning,
                             hoverBorderColor: window.theme.warning,
-                            data: [10, 50, 12, 14, 10, 50, 12, 14, 10, 50, 12, 14],
+                            // data: [10, 50, 12, 14, 10, 50, 12, 14, 10, 50, 12, 14],
                             barPercentage: .75,
                             categoryPercentage: .5
                         }]
