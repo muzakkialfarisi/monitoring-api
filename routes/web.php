@@ -27,9 +27,9 @@ $router->group(['prefix' => 'feature'], function () use ($router) {
     Route::post('/upsert', 'FeatureController@upsert_process')->name('feature.upsert_process');
 });
 
-$router->group(['prefix' => 'backend'], function () use ($router) {
-    Route::get('/md/{main_dealer_id}', 'BackEndController@index')->name('backend.index');
-    Route::post('/md/{main_dealer_id}/upsert', 'BackEndController@upsert_process')->name('backend.upsert_process');
+$router->group(['prefix' => 'application'], function () use ($router) {
+    Route::get('/md/{main_dealer_id}', 'BackEndController@index')->name('application.index');
+    Route::post('/md/{main_dealer_id}/upsert', 'BackEndController@upsert_process')->name('application.upsert_process');
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {

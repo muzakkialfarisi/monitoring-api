@@ -34,7 +34,7 @@ class BackEndController extends Controller
         $validator = (new BackEndValidator())->validate($params);
 
         if ($validator->fails()) {
-            return redirect()->route('backend.index', ['main_dealer_id' => $params['main_dealer_id']])
+            return redirect()->route('application.index', ['main_dealer_id' => $params['main_dealer_id']])
             ->with(['error' => $validator->errors()->first()]);
         }
         if(isset($params['id'])){
@@ -50,11 +50,11 @@ class BackEndController extends Controller
         }
 
         if(!$data){
-            return redirect()->route('backend.index', ['main_dealer_id' => $params['main_dealer_id']])
+            return redirect()->route('application.index', ['main_dealer_id' => $params['main_dealer_id']])
             ->with(['error' => 'Data failed to save!']);
         }
 
-        return redirect()->route('backend.index', ['main_dealer_id' => $params['main_dealer_id']])
+        return redirect()->route('application.index', ['main_dealer_id' => $params['main_dealer_id']])
         ->with(['success' => 'Data saved successfully!']);
     }
 }

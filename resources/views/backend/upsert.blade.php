@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
 
-            <form method="post" action="{{ route('backend.upsert_process', ['main_dealer_id' => $data->id]) }}">
+            <form method="post" action="{{ route('application.upsert_process', ['main_dealer_id' => $data->id]) }}">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Application</h5>
