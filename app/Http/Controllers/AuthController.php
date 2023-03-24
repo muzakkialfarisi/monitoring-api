@@ -18,7 +18,7 @@ class AuthController extends Controller
         $params = json_decode(json_encode($request->all()), true);
 
         if(isset($params['username']) || isset($params['password'])){
-            if($params['username'] == 'mzkalfarisi' && $params['password'] == 'inovation'){
+            if($params['username'] == 'mzkalfarisi' && $params['password'] == 'innovation'){
                 return redirect()->route('dashboard.index');
             }
         }

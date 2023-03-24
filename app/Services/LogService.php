@@ -9,6 +9,8 @@ use App\Repositories\LogRepository;
 use App\Repositories\ApiRepository;
 use App\Mail\SendMail;
 
+use App\Events\AfterAPIExecuted;
+
 class LogService
 {
     private float
@@ -102,6 +104,13 @@ class LogService
             $api->save();
 
             if($api->is_push_email == true){
+                event(new AfterAPIExecuted([
+                    'telegram' => [
+                        'chat_id' => config('tele.merapi_channel_id'),
+                        'text' => $log
+                    ]
+                ]));
+
                 \Mail::to('mzkalfarisi@gmail.com')
                     ->cc(['muzakki.ahmadalfarisi@hso.astra.co.id'])
                     ->send(new SendMail([
