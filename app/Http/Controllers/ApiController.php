@@ -49,8 +49,6 @@ class ApiController extends Controller
 
         $data['main_dealer']['id'] = $main_dealer_id ?? 0;
 
-        // dd( $data);
-
         return view('api/upsert')->with(['data' => $data]);
     }
 

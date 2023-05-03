@@ -15,10 +15,13 @@ class AddColumnIsActiveOnUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             if (!Schema::hasColumn('users', 'username')) {
-                $table->boolean('username');
+                $table->string('username');
             }
             if (!Schema::hasColumn('users', 'is_active')) {
                 $table->boolean('is_active');
+            }
+            if (!Schema::hasColumn('users', 'salt')) {
+                $table->string('salt');
             }
         });
     }
@@ -36,6 +39,9 @@ class AddColumnIsActiveOnUsers extends Migration
             }
             if (Schema::hasColumn('users', 'is_active')) {
                 $table->dropColumn('is_active');
+            }
+            if (Schema::hasColumn('users', 'salt')) {
+                $table->dropColumn('salt');
             }
         });
     }

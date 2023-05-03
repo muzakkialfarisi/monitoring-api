@@ -19,7 +19,8 @@ $router->group(['prefix' => 'dashboard'], function () use ($router) {
 
 $router->group(['prefix' => 'user'], function () use ($router) {
     Route::get('/', 'UserController@index')->name('user.index');
-    Route::post('/upsert', 'UserController@upsert')->name('user.upsert');
+    Route::get('/upsert/{id?}', 'UserController@upsert')->name('user.upsert');
+    Route::post('/upsert/{id?}', 'UserController@upsert_process')->name('user.upsert_process');
 });
 
 $router->group(['prefix' => 'maindealer'], function () use ($router) {

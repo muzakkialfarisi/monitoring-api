@@ -7,7 +7,8 @@ use Carbon\Carbon;
 use App\Models\ApiModel;
 
 class ApiRepository extends MasterRepository
-{    public $model;
+{    
+    public $model;
 
     public function __construct()
     {

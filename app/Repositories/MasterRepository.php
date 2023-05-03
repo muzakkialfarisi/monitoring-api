@@ -87,17 +87,6 @@ class MasterRepository
         return $data;
     }
 
-    public function save_record($params)
-    {
-        $data = $this->model->create($params);
-        return $data;
-    }
-
-    public function update_record_by_id($id, $params)
-    {
-        return $this->model->where($this->model->getKeyName(), $id)->update($params);
-    }
-
     public function get_first($params = [], $object = null)
     {
         $data = ($object) ? $object : $this->model;
@@ -144,6 +133,17 @@ class MasterRepository
         $data = (isset($params['limit'])) ? $data->paginate($params['limit']) : $data->first();
 
         return $data;
+    }
+
+    public function save_record($params)
+    {
+        $data = $this->model->create($params);
+        return $data;
+    }
+
+    public function update_record_by_id($id, $params)
+    {
+        return $this->model->where($this->model->getKeyName(), $id)->update($params);
     }
 
     public function delete_record_by_id($id, $object = null)

@@ -13,11 +13,11 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'username', 'is_active', 'salt',
     ];
 
     protected $dateFormat = "Y-m-d H:i:s";
-    
+
     protected $hidden = [
         'password', 'remember_token',
     ];

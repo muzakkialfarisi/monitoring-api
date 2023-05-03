@@ -7,8 +7,7 @@
                 <h5 class="card-title"><strong>User</strong></h5>
             </div>
             <div>
-                <button class="btn btn-primary btn-pill btn-upsert" data-bs-toggle="modal" data-bs-target="#modal_upsert">Add New User</button>
-                @include('user.upsert')
+                <a class="btn btn-primary btn-pill btn-upsert" href="{{ route('user.upsert') }}">Add New User</a>
             </div>
         </div>
     </div>
@@ -41,13 +40,7 @@
                                 <button type="button" class="btn btn-sm btn-outline-tertiary" data-bs-toggle="dropdown"><i class="fas fa-fw fa-ellipsis-h"></i></button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        {{-- <a class="dropdown-item" href="{{ route('application.index', ['main_dealer_id' => $item['id']]) }}">Application</a>
-                                        <a class="dropdown-item" href="{{ route('api.index', $item['id']) }}">API</a>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <a class="dropdown-item text-warning btn-upsert" data-id="{{ $item['id'] }}"
-                                        data-name="{{ $item['name'] }}"
-                                        data-is_active="{{ $item['is_active'] }}"
-                                        data-bs-toggle="modal" data-bs-target="#modal_upsert">Edit</a> --}}
+                                        <a class="dropdown-item" href="{{ route('user.upsert', ['id' => $item['id']]) }}">Edit</a>
                                     </li>
                                 </ul>
                             </td>
