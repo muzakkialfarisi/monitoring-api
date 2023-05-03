@@ -6,172 +6,16 @@ use Carbon\Carbon;
 
 use App\Models\ApiModel;
 
-class ApiRepository
-{
-    private Int
-        $id,
-        $main_dealer_id,
-        $back_end_id,
-        $feature_id;
-
-    private bool
-        $is_active,
-        $status_code_validation,
-        $response_time_validation,
-        $response_body_validation;
-
-    private array
-        $data = [],
-        $relationship = [];
-    
-    private string 
-        $path;
+class ApiRepository extends MasterRepository
+{    public $model;
 
     public function __construct()
     {
-        $this->api_model = new ApiModel();
+        $this->model = new ApiModel();
+        parent::__construct($this->model);
     }
 
-    public function set_id(Int $id): self
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    public function set_back_end_id(Int $back_end_id): self
-    {
-        $this->back_end_id = $back_end_id;
-        return $this;
-    }
-
-    public function set_feature_id(Int $feature_id): self
-    {
-        $this->feature_id = $feature_id;
-        return $this;
-    }
-
-    public function set_path(string $path): self
-    {
-        $this->path = $path;
-        return $this;
-    }
-
-    public function set_main_dealer_id(string $main_dealer_id): self
-    {
-        $this->main_dealer_id = $main_dealer_id;
-        return $this;
-    }
-
-    public function set_status_code_validation(bool $status_code_validation): self
-    {
-        $this->status_code_validation = $status_code_validation;
-        return $this;
-    }
-
-    public function set_response_time_validation(bool $response_time_validation): self
-    {
-        $this->response_time_validation = $response_time_validation;
-        return $this;
-    }
-
-    public function set_response_body_validation(bool $response_body_validation): self
-    {
-        $this->response_body_validation = $response_body_validation;
-        return $this;
-    }
-
-    public function set_is_active(bool $is_active): self
-    {
-        $this->is_active = $is_active;
-        return $this;
-    }
-
-    public function set_relationship(array $relationship): self
-    {
-        $this->relationship = $relationship;
-        return $this;
-    }
-
-    public function getFirst()
-    {
-        $api_model = $this->api_model->whereNull("deleted_at");
-
-        if(isset($this->id)){
-            $api_model = $api_model->where('id', $this->id);
-        }
-
-        if(isset($this->main_dealer_id)){
-            $api_model = $api_model->where('main_dealer_id', $this->main_dealer_id);
-        }
-
-        if(isset($this->back_end_id)){
-            $api_model = $api_model->where('back_end_id', $this->back_end_id);
-        }
-
-        if(isset($this->feature_id)){
-            $api_model = $api_model->where('feature_id', $this->feature_id);
-        }
-
-        if(isset($this->path)){
-            $api_model = $api_model->where('path', $this->path);
-        }
-
-        if(isset($this->is_active)){
-            $api_model = $api_model->where('is_active', $this->is_active);
-        }
-
-        if(count($this->relationship) > 0){
-            $api_model = $api_model->with($this->relationship);
-        }
-
-        $api_model = $api_model->first();
-
-        if(!$api_model){
-            return false;
-        }
-
-        return $api_model;
-    }
-
-    public function getList(): Object
-    {
-        $api_model = $this->api_model->whereNull("deleted_at");
-
-        if(isset($this->id)){
-            $api_model = $api_model->where('id', $this->id);
-        }
-
-        if(isset($this->main_dealer_id)){
-            $api_model = $api_model->where('main_dealer_id', $this->main_dealer_id);
-        }
-
-        if(isset($this->back_end_id)){
-            $api_model = $api_model->where('back_end_id', $this->back_end_id);
-        }
-
-        if(isset($this->feature_id)){
-            $api_model = $api_model->where('feature_id', $this->feature_id);
-        }
-
-        if(isset($this->path)){
-            $api_model = $api_model->where('path', $this->path);
-        }
-
-        if(isset($this->is_active)){
-            $api_model = $api_model->where('is_active', $this->is_active);
-        }
-
-        if(count($this->relationship) > 0){
-            $api_model = $api_model->with($this->relationship);
-        }
-
-        return (object) [
-            "total" => $api_model->count(),
-            "rows" =>  $api_model->get()
-        ];
-    }
-
-    public function getListIsError()
+    public function get_list_error()
     {
         $data = (new ApiModel())->where('is_active', 1)
             ->whereNull('deleted_at')
@@ -187,7 +31,21 @@ class ApiRepository
         ];
     }
 
-    public function set_data($param): self
+    public function update_record_by_id($id, $params)
+    {
+        $data = $this->set_data($params);
+
+        return parent::update_record_by_id($id, $data);
+    }
+
+    public function save_record($params)
+    {
+        $data = $this->set_data($params);
+
+        return parent::save_record($data);
+    }
+
+    private function set_data($param)
     {
         $data = [
             'back_end_id' => $param['back_end_id'] ?? null,
@@ -220,93 +78,6 @@ class ApiRepository
             'response_body_id'=> 0,
         ];
 
-        $this->data = $data;
-
-        return $this;
-    }
-
-    public function create($param)
-    {
-        $data = (new ApiModel())->create($this->data);    
-        
-        if(!$data){
-            return false;
-        }
-
         return $data;
-    }  
-
-    public function update($param)
-    {
-        $data = (new ApiModel())->whereNull("deleted_at");
-
-        if(isset($this->id)){
-            $data = $data->where('id', $this->id);
-        }
-
-        if(isset($this->main_dealer_id)){
-            $data = $data->where('main_dealer_id', $this->main_dealer_id);
-        }
-
-        if(isset($this->back_end_id)){
-            $data = $data->where('back_end_id', $this->back_end_id);
-        }
-
-        if(isset($this->feature_id)){
-            $data = $data->where('feature_id', $this->feature_id);
-        }
-
-        if(isset($this->path)){
-            $data = $data->where('path', $this->path);
-        }
-
-        if(isset($this->is_active)){
-            $data = $data->where('is_active', $this->is_active);
-        }
-
-        $data = $data->update($this->data);
-
-        if(!$data){
-            return false;
-        }
-
-        return true;
-    }
-
-    public function delete()
-    {
-        $data = (new ApiModel())->whereNull("deleted_at");
-
-        if(isset($this->id)){
-            $data = $data->where('id', $this->id);
-        }
-
-        if(isset($this->main_dealer_id)){
-            $data = $data->where('main_dealer_id', $this->main_dealer_id);
-        }
-
-        if(isset($this->back_end_id)){
-            $data = $data->where('back_end_id', $this->back_end_id);
-        }
-
-        if(isset($this->feature_id)){
-            $data = $data->where('feature_id', $this->feature_id);
-        }
-
-        if(isset($this->path)){
-            $data = $data->where('path', $this->path);
-        }
-
-        if(isset($this->is_active)){
-            $data = $data->where('is_active', $this->is_active);
-        }
-
-        $data = $data->delete();
-        
-        if(!$data){
-            return false;
-        }
-
-        return true;
     }
 }

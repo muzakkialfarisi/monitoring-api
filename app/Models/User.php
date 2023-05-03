@@ -16,6 +16,8 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
+    protected $dateFormat = "Y-m-d H:i:s";
+    
     protected $hidden = [
         'password', 'remember_token',
     ];

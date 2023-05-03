@@ -14,9 +14,13 @@ class LogController extends Controller
 {
     public function index(Int $main_dealer_id = null)
     {
+        $params['conditions'][] = [
+            'field' => 'id',
+            'value' => $main_dealer_id,
+        ];
+        
         $data = (new MainDealerRepository())
-                ->set_id($main_dealer_id ?? 0)
-                ->getFirst();
+                ->get_first();
                 
         if(!isset($main_dealer_id)){
             $data['log'] = (new LogRepository())

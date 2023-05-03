@@ -6,7 +6,7 @@
             <div class="flex-grow-1 ps-3">
                 <h5 class="card-title"><strong>Log {{ $data->name ?? '' }}</strong></h5>
             </div>
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col">
                     <div class="input-group">
                         <button class="btn btn-outline-primary" data-bs-toggle="dropdown">Export</button>
@@ -15,7 +15,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <div class="card-body">

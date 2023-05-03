@@ -12,9 +12,10 @@ class MainDealerController extends Controller
 {
     public function index()
     {
-        $data = (new MainDealerRepository())
-                ->set_relationship(['backend'])
-                ->getList();
+        $params['order_field'] = 'id';
+        $params['order_sort']  = 'asc';
+
+        $data = (new MainDealerRepository())->get_list($params);
 
         return view('maindealer/index')->with(['data' => $data]);
     }
@@ -29,16 +30,12 @@ class MainDealerController extends Controller
             return redirect()->route('maindealer.index')->with(['error' => $validator->errors()->first()]);
         }
 
-        if(isset($params['id'])){
+        if (isset($params['id'])) {
             $data = (new MainDealerRepository())
-                ->set_id($params['id'])
-                ->set_data($params)
-                ->update();
-        }
-        else{
+                ->update_record_by_id($params['id'], $params);
+        } else {
             $data = (new MainDealerRepository())
-                ->set_data($params)
-                ->create();
+                ->save_record($params);
         }
 
         if(!$data){

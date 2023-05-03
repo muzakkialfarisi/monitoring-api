@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-if (env('APP_ENV') === 'production') {
-    \URL::forceScheme('https');
-}
+// if (env('APP_ENV') === 'production') {
+//     \URL::forceScheme('https');
+// }
 
 Route::get('/', 'AuthController@login')->name('login');
 
@@ -15,6 +15,11 @@ $router->group(['prefix' => 'auth'], function () use ($router) {
 
 $router->group(['prefix' => 'dashboard'], function () use ($router) {
     Route::get('/', 'DashboardController@index')->name('dashboard.index');
+});
+
+$router->group(['prefix' => 'user'], function () use ($router) {
+    Route::get('/', 'UserController@index')->name('user.index');
+    Route::post('/upsert', 'UserController@upsert')->name('user.upsert');
 });
 
 $router->group(['prefix' => 'maindealer'], function () use ($router) {

@@ -14,32 +14,43 @@ class ApiController extends Controller
 {
     public function index($main_dealer_id = null)
     {
-        $data = (new MainDealerRepository())
-            ->set_relationship(['api'])
-            ->set_id($main_dealer_id ?? 0)
-            ->getFirst();
+        $params['conditions'][] = [
+            'field' => 'id',
+            'value' => $main_dealer_id,
+        ];
+
+        $params['relationship'] = ['api'];
+
+        $data = (new MainDealerRepository())->get_first($params);
 
         return view('api/index')->with(['data' => $data]);
     }
 
     public function upsert($main_dealer_id = null, $id = null)
     {
-        $data = (new ApiRepository())
-            ->set_relationship(['main_dealer', 'back_end'])
-            ->set_id($id ?? 0)
-            ->getFirst();
+        $params['relationship'] = ['main_dealer', 'back_end'];
 
+        $data = (new ApiRepository())
+            ->get_first($params);
+
+        $params_b['conditions'][] = [
+            'field' => 'main_dealer_id',
+            'value' => $main_dealer_id,
+        ];
         $data['back_ends'] = (new BackEndRepository())
-            ->set_is_active(1)
-            ->set_main_dealer_id($main_dealer_id ?? 0)
-            ->getList();
-        
+            ->get_list($params_b);
+
+        $params_f['conditions'][] = [
+            'field' => 'is_active',
+            'value' => 1,
+        ];
         $data['features'] = (new FeatureRepository())
-            ->set_is_active(1)
-            ->getList();
-        
+            ->get_list($params_f);
+
         $data['main_dealer']['id'] = $main_dealer_id ?? 0;
-        // dd($data);
+
+        // dd( $data);
+
         return view('api/upsert')->with(['data' => $data]);
     }
 
@@ -53,23 +64,19 @@ class ApiController extends Controller
             return $validator->errors()->all();
         }
 
-        if($id == null){
+        if ($id == null) {
             $save = (new ApiRepository())
-                ->set_data($params)
-                ->create($params);
-        }
-        else{
+                ->save_record($params);
+        } else {
             $save = (new ApiRepository())
-                ->set_data($params)
-                ->set_id($params['id'])
-                ->update($params);
+                ->update_record_by_id($params['id'], $params);
         }
 
-        if(!$save){
+        if (!$save) {
             return redirect()->back()
-            ->with(['error' => 'Data failed to save!']);
+                ->with(['error' => 'Data failed to save!']);
         }
-                
+
         return redirect()->route('api.upsert', ['main_dealer_id' => $main_dealer_id, 'id' => $params['id']])
             ->with(['success' => 'Data saved successfully!']);
     }
@@ -79,32 +86,40 @@ class ApiController extends Controller
         $params = json_decode(json_encode($request->all()), true);
 
         $data = (new ApiRepository())
-                ->set_main_dealer_id($params['main_dealer_id'] ?? 0)
-                ->set_id($params['id'] ?? 0)
-                ->delete();
-        
-        if(!$data){
+            ->delete_record_by_id($params['id']);
+
+        if (!$data) {
             return redirect()->back()->with(['error' => 'Delete faied!']);
         }
 
         return view('api.index', ['main_dealer_id' => $params['main_dealer_id']])->with(['success' => 'Deleted successfully!']);
     }
-    
-    public function alert(Int $main_dealer_id = null)
+
+    public function alert()
     {
         $data['api'] = (new ApiRepository())
-            ->getListIsError();
-        
+            ->get_list_error();
+
         return view('api/alert')->with(['data' => $data]);
     }
 
     public function detail(Int $main_dealer_id, Int $id)
     {
+        $params['conditions'] = [
+            [
+                'field' => 'id',
+                'value' => $id,
+            ],
+            [
+                'field' => 'main_dealer_id',
+                'value' => $main_dealer_id,
+            ]
+        ];
+
+        $params['relationship'] = ['main_dealer', 'feature', 'back_end', 'status_code_log', 'response_time_log', 'response_body_log'];
+
         $data['api'] = (new ApiRepository())
-            ->set_id($id)
-            ->set_main_dealer_id($main_dealer_id)
-            ->set_relationship(['main_dealer', 'feature', 'back_end', 'status_code_log', 'response_time_log', 'response_body_log'])
-            ->getFirst();   
+            ->get_first();
 
         return view('api/detail')->with(['data' => $data]);
     }

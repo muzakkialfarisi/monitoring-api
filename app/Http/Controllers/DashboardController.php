@@ -13,13 +13,13 @@ class DashboardController extends Controller
     public function index()
     {
         $main_dealer = (new MainDealerRepository())
-            ->getList();
+            ->count_list();
 
         $feature = (new FeatureRepository())
-            ->getList();
+            ->count_list();
 
         $api = (new ApiRepository())
-            ->getList();
+            ->count_list();
 
         $log = (new LogRepository())
             ->getFailur();

@@ -21,9 +21,6 @@
                             action
                         </th>
                         <th>
-                            id
-                        </th>
-                        <th>
                             name
                         </th>
                         <th>
@@ -32,7 +29,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($data->rows as $item)
+                    @foreach($data as $item)
                         <tr>
                             <td class="text-center">
                                 <button type="button" class="btn btn-sm btn-outline-tertiary" data-bs-toggle="dropdown"><i class="fas fa-fw fa-ellipsis-h"></i></button>
@@ -45,9 +42,6 @@
                                         data-bs-toggle="modal" data-bs-target="#modal_upsert">Edit</a>
                                     </li>
                                 </ul>
-                            </td>
-                            <td>
-                                {{$item['id']}}
                             </td>
                             <td>
                                 {{$item['name']}}

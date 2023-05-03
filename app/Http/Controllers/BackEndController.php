@@ -11,14 +11,14 @@ class BackEndController extends Controller
 {
     public function index($main_dealer_id = null)
     {
-        $data = (new MainDealerRepository())
-            ->set_id($main_dealer_id ?? 0)
-            ->set_relationship(['backend'])
-            ->getFirst();
+        $params['conditions'][] = [
+            'field' => 'id',
+            'value' => $main_dealer_id,
+        ];
 
-        if(!$data){
-            return redirect()->back()->with(['error' => 'Main Dealer not found!']);
-        }
+        $params['relationship'] = ['backend'];
+
+        $data = (new MainDealerRepository())->get_first($params);
 
         return view('backend/index')->with(['data' => $data]);
     }
@@ -30,31 +30,28 @@ class BackEndController extends Controller
         if (!isset($params['main_dealer_id'])) {
             return redirect()->route('maindealer.index')->with(['error' => 'Main Dealer not found!']);
         }
-        
+
         $validator = (new BackEndValidator())->validate($params);
 
         if ($validator->fails()) {
             return redirect()->route('application.index', ['main_dealer_id' => $params['main_dealer_id']])
-            ->with(['error' => $validator->errors()->first()]);
-        }
-        if(isset($params['id'])){
-            $data = (new BackEndRepository())
-                ->set_id($params['id'])
-                ->set_data($params)
-                ->update();
-        }
-        else{
-            $data = (new BackEndRepository())
-                ->set_data($params)
-                ->create();
+                ->with(['error' => $validator->errors()->first()]);
         }
 
-        if(!$data){
+        if (isset($params['id'])) {
+            $data = (new BackEndRepository())
+                ->update_record_by_id($params['id'], $params);
+        } else {
+            $data = (new BackEndRepository())
+                ->save_record($params);
+        }
+
+        if (!$data) {
             return redirect()->route('application.index', ['main_dealer_id' => $params['main_dealer_id']])
-            ->with(['error' => 'Data failed to save!']);
+                ->with(['error' => 'Data failed to save!']);
         }
 
         return redirect()->route('application.index', ['main_dealer_id' => $params['main_dealer_id']])
-        ->with(['success' => 'Data saved successfully!']);
+            ->with(['success' => 'Data saved successfully!']);
     }
 }

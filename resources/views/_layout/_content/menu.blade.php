@@ -9,6 +9,11 @@
 <li class="sidebar-header">
     maintenance
 </li>
+<li class="sidebar-item {{ Request::is('user') || Request::is('api/user/*')? 'active' : '' }} ">
+    <a class="sidebar-link" href="{{ route('user.index') }}">
+        <i class="align-middle me-2 fas fa-fw fa-tachometer-alt"></i> <span class="align-middle">User</span>
+    </a>
+</li>
 <li class="sidebar-item {{ Request::is('maindealer') || Request::is('api/md/*')? 'active' : '' }} ">
     <a class="sidebar-link" href="{{ route('maindealer.index') }}">
         <i class="align-middle me-2 fas fa-fw fa-tachometer-alt"></i> <span class="align-middle">Main Dealer</span>

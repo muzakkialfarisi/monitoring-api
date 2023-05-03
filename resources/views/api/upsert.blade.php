@@ -20,7 +20,7 @@
                         <label class="control-label">Feature</label>
                         <select name="feature_id" class="form-control" required="required">
                             <option value="">Select...</option>
-                            @foreach ($data['features']->rows as $item)
+                            @foreach ($data['features'] as $item)
                                 <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
                             @endforeach
                         </select>
@@ -41,7 +41,7 @@
                         <label class="control-label">Back End</label>
                         <select name="back_end_id" class="form-control" required="required">
                             <option value="">Select...</option>
-                            @foreach ($data['back_ends']->rows as $item)
+                            @foreach ($data['back_ends'] as $item)
                                 <option value="{{ $item['id'] }}" data-base_url="{{ $item['base_url'] }}">{{ $item['name'] }}</option>
                             @endforeach
                         </select>

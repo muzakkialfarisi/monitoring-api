@@ -11,7 +11,7 @@ class FeatureController extends Controller
     public function index()
     {
         $data = (new FeatureRepository())
-                ->getList();
+            ->get_list();
 
         return view('feature/index')->with(['data' => $data]);
     }
@@ -25,19 +25,15 @@ class FeatureController extends Controller
         if ($validator->fails()) {
             return redirect()->route('feature.index')->with(['error' => $validator->errors()->first()]);
         }
-        if(isset($params['id'])){
+        if (isset($params['id'])) {
             $data = (new FeatureRepository())
-                ->set_id($params['id'])
-                ->set_data($params)
-                ->update();
-        }
-        else{
+                ->update_record_by_id($params['id'], $params);
+        } else {
             $data = (new FeatureRepository())
-                ->set_data($params)
-                ->create();
+                ->save_record($params);
         }
 
-        if(!$data){
+        if (!$data) {
             return redirect()->route('feature.index')->with(['error' => 'Data failed to save!']);
         }
 
