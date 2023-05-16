@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Validator;
 
 class ApiValidator
 {
-  public function rules($id = null)
-  {    
+  public function validate($params)
+  {
     $validate['feature_id'] = 'required|numeric|exists:feature,id';
     $validate['method'] = 'required|in:GET,POST,UPDATE,DELETE';
     $validate['back_end_id'] = 'required|numeric|exists:back_end,id';
@@ -17,27 +17,11 @@ class ApiValidator
     $validate['is_check_status_code'] = 'required|numeric|in,0,1';
     $validate['is_check_response_time'] = 'required|numeric|in,0,1';
     $validate['is_check_response_body'] = 'required|numeric|in,0,1';
-    
-    if(isset($id)){
+
+    if (isset($params['id'])) {
       $validate['id'] = 'required|numeric|exists:api,id';
     }
 
-    return $validate;
-  }
-
-  public function message()
-  {
-    return [
-      'required' => ':attribute harus diisi',
-      'numeric' => ':attribute harus numeric',
-      'exists' => ':attribute harus terdaftar',
-      'min' => ':attribute tidak boleh kurang dari min:',
-      'in' => ':attribute tidak terdaftar',
-    ];
-  }
-
-  public function validate($params)
-  {
-    return Validator::make($params, $this->rules($params['id']), $this->message());
+    return Validator::make($params, $validate);
   }
 }

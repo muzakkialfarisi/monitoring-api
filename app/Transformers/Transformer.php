@@ -5,7 +5,8 @@ namespace App\Transformers;
 use League\Fractal;
 use League\Fractal\Manager;
 
-class Transformer {
+class Transformer
+{
 
     private array $include = [];
 
@@ -15,23 +16,27 @@ class Transformer {
 
     private bool $increment = false;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->manager = new Manager();
         $this->index = 0;
     }
 
-    public function parseInclude(array $include) {
+    public function parseInclude(array $include)
+    {
         $this->include = $include;
         return $this;
     }
 
-    public function setIndex(int $prefix=0) {
+    public function setIndex(int $prefix = 0)
+    {
         $this->prefix = $prefix;
         $this->increment = true;
         return $this;
     }
 
-    public function buildCollection(object $collection, object $tranformer): array {
+    public function buildCollection(object $collection, object $tranformer): array
+    {
 
         if ($this->increment)
             $collection = $this->addIncrement($collection);
@@ -39,18 +44,20 @@ class Transformer {
         return $this->createData(new Fractal\Resource\Collection($collection, $tranformer));
     }
 
-    public function buildItem(object $items, object $tranformer) {
+    public function buildItem(object $items, object $tranformer)
+    {
         return $this->createData(new Fractal\Resource\Item($items, $tranformer));
     }
 
-    private function addIncrement($collection) {
+    private function addIncrement($collection)
+    {
         $collect = collect($collection);
         $collection = $collect->map(function ($item, $_) {
             $this->index++;
 
             $index = $this->index;
             if (!empty($this->prefix))
-                $index = (int) ( ((string) $this->prefix) . ((string) $index) );
+                $index = (int) (((string) $this->prefix) . ((string) $index));
 
             $item->_index = $index;
             return $item;
@@ -59,7 +66,8 @@ class Transformer {
         return $collection;
     }
 
-    private function createData($resource) {
+    private function createData($resource)
+    {
         if (!empty($this->include))
             $this->manager->parseIncludes($this->include);
 

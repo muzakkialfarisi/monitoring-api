@@ -174,7 +174,7 @@ class LogRepository
             'response_time_validation' => $this->response_time_validation ?? null,
         ]);
 
-        if(!$data){
+        if (!$data) {
             return false;
         }
 
@@ -185,7 +185,7 @@ class LogRepository
     {
         $data = (new LogModel())->whereNull("deleted_at");
 
-        if(isset($this->main_dealer_id)){
+        if (isset($this->main_dealer_id)) {
             $data = $data->where('main_dealer_id', $this->main_dealer_id);
         }
 
@@ -200,8 +200,8 @@ class LogRepository
         $data = (new LogModel())->whereNull("deleted_at");
 
         $data = $data->where('status_code_validation', false)
-        ->orWhere('response_body_validation', false)
-        ->orWhere('response_time_validation', false);
+            ->orWhere('response_body_validation', false)
+            ->orWhere('response_time_validation', false);
 
         return (object) [
             "total" => $data->count(),

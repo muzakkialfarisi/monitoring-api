@@ -87,23 +87,25 @@ class ApiController extends Controller
             ->delete_record_by_id($params['id']);
 
         if (!$data) {
-            return redirect()->back()->with(['error' => 'Delete faied!']);
+            return redirect()->back()
+                ->with(['error' => 'Delete faied!']);
         }
 
-        return view('api.index', ['main_dealer_id' => $params['main_dealer_id']])->with(['success' => 'Deleted successfully!']);
+        return view('api.index', ['main_dealer_id' => $params['main_dealer_id']])
+            ->with(['success' => 'Deleted successfully!']);
     }
 
     public function alert()
     {
-        $data['api'] = (new ApiRepository())
-            ->get_list_error();
+        $data['api'] = (new ApiRepository())->get_list_error();
 
-        return view('api/alert')->with(['data' => $data]);
+        return view('api/alert')
+            ->with(['data' => $data]);
     }
 
     public function detail(Int $main_dealer_id, Int $id)
     {
-        $params['conditions'] = [
+        $query['conditions'] = [
             [
                 'field' => 'id',
                 'value' => $id,
@@ -114,11 +116,11 @@ class ApiController extends Controller
             ]
         ];
 
-        $params['relationship'] = ['main_dealer', 'feature', 'back_end', 'status_code_log', 'response_time_log', 'response_body_log'];
+        $query['relationship'] = ['main_dealer', 'feature', 'back_end', 'status_code_log', 'response_time_log', 'response_body_log'];
 
-        $data['api'] = (new ApiRepository())
-            ->get_first();
+        $data['api'] = (new ApiRepository())->get_first($query);
 
-        return view('api/detail')->with(['data' => $data]);
+        return view('api/detail')
+            ->with(['data' => $data]);
     }
 }

@@ -15,5 +15,4 @@ class UserValidator
 
         return Validator::make($params, $validate);
     }
-
 }

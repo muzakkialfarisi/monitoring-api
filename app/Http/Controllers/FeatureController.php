@@ -23,7 +23,8 @@ class FeatureController extends Controller
         $validator = (new FeatureValidator())->validate($params);
 
         if ($validator->fails()) {
-            return redirect()->route('feature.index')->with(['error' => $validator->errors()->first()]);
+            return redirect()->route('feature.index')
+                ->with(['error' => $validator->errors()->first()]);
         }
         if (isset($params['id'])) {
             $data = (new FeatureRepository())
@@ -34,9 +35,11 @@ class FeatureController extends Controller
         }
 
         if (!$data) {
-            return redirect()->route('feature.index')->with(['error' => 'Data failed to save!']);
+            return redirect()->route('feature.index')
+                ->with(['error' => 'Data failed to save!']);
         }
 
-        return redirect()->route('feature.index')->with(['success' => 'Data saved successfully!']);
+        return redirect()->route('feature.index')
+            ->with(['success' => 'Data saved successfully!']);
     }
 }

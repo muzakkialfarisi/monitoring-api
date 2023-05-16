@@ -11,14 +11,14 @@ class BackEndController extends Controller
 {
     public function index($main_dealer_id = null)
     {
-        $params['conditions'][] = [
+        $query['conditions'][] = [
             'field' => 'id',
             'value' => $main_dealer_id,
         ];
 
-        $params['relationship'] = ['backend'];
+        $query['relationship'] = ['backend'];
 
-        $data = (new MainDealerRepository())->get_first($params);
+        $data = (new MainDealerRepository())->get_first($query);
 
         return view('backend/index')->with(['data' => $data]);
     }

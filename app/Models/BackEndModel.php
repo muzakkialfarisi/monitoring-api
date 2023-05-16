@@ -22,7 +22,8 @@ class BackEndModel extends Model
 
     protected $hidden = ['deleted_at'];
 
-    public function main_dealer(){
-        return $this->hasOne(MainDealer::class, 'id','main_dealer_id');
+    public function main_dealer()
+    {
+        return $this->hasOne(MainDealer::class, 'id', 'main_dealer_id');
     }
 }

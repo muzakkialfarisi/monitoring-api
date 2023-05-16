@@ -12,6 +12,8 @@ class User extends Authenticatable
     use SoftDeletes;
     use Notifiable;
 
+    protected $table = 'users';
+
     protected $fillable = [
         'name', 'email', 'password', 'username', 'is_active', 'salt',
     ];

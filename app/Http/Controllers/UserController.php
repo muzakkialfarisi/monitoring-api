@@ -18,19 +18,18 @@ class UserController extends Controller
     public function upsert($id = null)
     {
         if (isset($id)) {
-            $params = [
-                'conditions'    => [
-                    [
-                        'field' => 'id',
-                        'value' => $id
-                    ]
+            $query['conditions'] = [
+                [
+                    'field' => 'id',
+                    'value' => $id
                 ]
             ];
 
-            $data = (new UserRepository())->get_first($params);
+            $data = (new UserRepository())->get_first($query);
 
             if (!$data) {
-                return redirect()->back()->with(['error' => 'Data not found!']);
+                return redirect()->back()
+                    ->with(['error' => 'Data not found!']);
             }
         }
 
@@ -52,8 +51,23 @@ class UserController extends Controller
             $save = (new UserRepository())
                 ->save_record($params);
         } else {
+            $query['conditions'] = [
+                [
+                    'field' => 'id',
+                    'value' => $id
+                ]
+            ];
+
+            $user = (new UserRepository())
+                ->get_first($query);
+
+            if (!$user) {
+                return redirect()->back()
+                    ->with(['error' => 'DUser not found!']);
+            }
+
             $save = (new UserRepository())
-                ->update_record_by_id($params['id'], $params);
+                ->update_record_by_id($user['id'], $params);
         }
 
         if (!$save) {
@@ -61,6 +75,7 @@ class UserController extends Controller
                 ->with(['error' => 'Data failed to save!']);
         }
 
-        return redirect()->route('user.upsert', ['id' => $params['id']])->with(['success' => 'Data saved successfully!']);
+        return redirect()->route('user.upsert', ['id' => $user['id']])
+            ->with(['success' => 'Data saved successfully!']);
     }
 }

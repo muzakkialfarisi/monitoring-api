@@ -13,8 +13,8 @@
                 @csrf
 
                 <div class="form-floating mb-3">
-				    <input class="form-control" name="username" placeholder="username">
-				    <label for="username">Username</label>
+				    <input class="form-control" name="email" placeholder="email">
+				    <label for="email">Email</label>
 			    </div>
 
                 <div class="input-group mb-3">

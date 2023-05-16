@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use App\Models\ApiModel;
 
 class ApiRepository extends MasterRepository
-{    
+{
     public $model;
 
     public function __construct()
@@ -76,7 +76,7 @@ class ApiRepository extends MasterRepository
             'priority' => $param['priority'] ?? 0,
             'status_code_id' => 0,
             'response_time_id' => 0,
-            'response_body_id'=> 0,
+            'response_body_id' => 0,
         ];
 
         return $data;

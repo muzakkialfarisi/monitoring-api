@@ -12,10 +12,10 @@ class MainDealerController extends Controller
 {
     public function index()
     {
-        $params['order_field'] = 'id';
-        $params['order_sort']  = 'asc';
+        $query['order_field'] = 'id';
+        $query['order_sort']  = 'asc';
 
-        $data = (new MainDealerRepository())->get_list($params);
+        $data = (new MainDealerRepository())->get_list($query);
 
         return view('maindealer/index')->with(['data' => $data]);
     }
@@ -38,7 +38,7 @@ class MainDealerController extends Controller
                 ->save_record($params);
         }
 
-        if(!$data){
+        if (!$data) {
             return redirect()->route('maindealer.index')->with(['error' => 'Data failed to save!']);
         }
 

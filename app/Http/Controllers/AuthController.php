@@ -18,11 +18,11 @@ class AuthController extends Controller
     {
         $params = json_decode(json_encode($request->all()), true);
 
-        if (isset($params['username']) || isset($params['password'])) {
+        if (isset($params['email']) || isset($params['password'])) {
             $query['conditions'] = [
                 [
-                    'field' => 'username',
-                    'value' => $params['username']
+                    'field' => 'email',
+                    'value' => $params['email']
                 ],
             ];
 
@@ -30,8 +30,15 @@ class AuthController extends Controller
 
             if ($user) {
                 $password_validation = (new AuthRepository())->hash_check($params['password'] . $user['salt'], $user['password']);
-
                 if ($password_validation) {
+                    $credential = [
+                        'email'     => $user['email'],
+                        'password'  => $user['password'],
+                    ];
+
+                    
+                    return redirect()->intended('dashboard');
+
                     return redirect()->route('dashboard.index');
                 }
             }
@@ -45,3 +52,4 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 }
+ 
